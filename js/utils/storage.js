@@ -473,12 +473,12 @@ const Storage = {
      */
     calculateTopicCoverage(completedExercises) {
         const topics = {
-            '3.1': { name: 'Omkrets och Area', completed: 0, total: 10 },
-            '3.2': { name: 'Cirkelns Area', completed: 0, total: 7 },
-            '3.3': { name: 'Volym och Begränsningsarea', completed: 0, total: 4 },
-            '3.4': { name: 'Enheter för Volym', completed: 0, total: 4 },
-            '3.5': { name: 'Prisma och Pyramid', completed: 0, total: 4 },
-            '3.6': { name: 'Cylinder, Kon och Klot', completed: 0, total: 6 }
+            '3.1': { name: 'Omkrets och Area', completed: 0, total: 28 },
+            '3.2': { name: 'Cirkelns Area', completed: 0, total: 18 },
+            '3.3': { name: 'Volym och Begränsningsarea', completed: 0, total: 18 },
+            '3.4': { name: 'Enheter för Volym', completed: 0, total: 24 },
+            '3.5': { name: 'Prisma och Pyramid', completed: 0, total: 18 },
+            '3.6': { name: 'Cylinder, Kon och Klot', completed: 0, total: 27 }
         };
 
         // Räkna klarade per ämne
