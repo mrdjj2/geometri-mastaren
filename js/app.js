@@ -999,8 +999,17 @@ const App = {
         const vizContainer = document.getElementById('visualization');
         if (vizContainer && exercise.visualization) {
             vizContainer.innerHTML = ''; // Rensa tidigare
-            const is3D = ['cuboid', 'cube', 'prism', 'triangular_prism', 'pyramid',
-                'cylinder', 'cone', 'sphere', 'hemisphere'].includes(exercise.visualization.type);
+            const is3D = [
+                'cuboid', 'cube', 'prism', 'triangular_prism', 'pyramid',
+                'cylinder', 'cone', 'sphere', 'hemisphere', 'half_cylinder',
+                'cube_wireframe', 'cube_nets', 'box_net', 'density_comparison',
+                'glass', 'wine_glass', 'aquarium', 'multi_shape', 'cylinder_unfolded',
+                'sphere_shell', 'sphere_in_cube', 'spheres_in_box', 'pyramid_comparison',
+                'sphere_from_cube', 'half_cylinder_tent', 'cuboid_from_areas', 'mold',
+                'prism_with_cutout', 'prism_analysis', 'cube_conversion', 'design',
+                'rain', 'glass_pane', 'snow_road', 'snow_removal', 'body_water',
+                'examples', 'table'
+            ].includes(exercise.visualization.type);
 
             if (is3D) {
                 Shapes3D.render(vizContainer, exercise.visualization);
