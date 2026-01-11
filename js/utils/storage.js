@@ -1,9 +1,11 @@
 /**
  * Storage - LocalStorage wrapper för persistent data
+ * Stöd för flera användarprofiler
  */
 
 const Storage = {
     PREFIX: 'geometri_',
+    currentProfileId: null,
 
     /**
      * Hämta data från localStorage
@@ -16,6 +18,22 @@ const Storage = {
             console.error('Storage get error:', e);
             return defaultValue;
         }
+    },
+
+    /**
+     * Hämta profilspecifik data
+     */
+    getForProfile(key, defaultValue = null) {
+        const profileId = this.getCurrentProfileId();
+        return this.get(`profile_${profileId}_${key}`, defaultValue);
+    },
+
+    /**
+     * Spara profilspecifik data
+     */
+    setForProfile(key, value) {
+        const profileId = this.getCurrentProfileId();
+        return this.set(`profile_${profileId}_${key}`, value);
     },
 
     /**
@@ -45,11 +63,14 @@ const Storage = {
     },
 
     /**
-     * Rensa all app-data
+     * Rensa all app-data för aktuell profil
      */
     clear() {
         try {
-            const keys = Object.keys(localStorage).filter(k => k.startsWith(this.PREFIX));
+            const profileId = this.getCurrentProfileId();
+            const keys = Object.keys(localStorage).filter(k =>
+                k.startsWith(this.PREFIX + `profile_${profileId}_`)
+            );
             keys.forEach(k => localStorage.removeItem(k));
             return true;
         } catch (e) {
@@ -58,12 +79,99 @@ const Storage = {
         }
     },
 
+    // ==========================================
+    // PROFILHANTERING - Stöd för flera användare
+    // ==========================================
+
     /**
-     * Hämta eller skapa användarprofil
+     * Hämta alla profiler
      */
-    getProfile() {
-        const defaultProfile = {
-            name: '',
+    getAllProfiles() {
+        return this.get('profiles', []);
+    },
+
+    /**
+     * Hämta aktuell profil-ID
+     */
+    getCurrentProfileId() {
+        if (this.currentProfileId) {
+            return this.currentProfileId;
+        }
+        const id = this.get('currentProfileId', null);
+        this.currentProfileId = id;
+        return id;
+    },
+
+    /**
+     * Sätt aktuell profil
+     */
+    setCurrentProfile(profileId) {
+        this.currentProfileId = profileId;
+        this.set('currentProfileId', profileId);
+    },
+
+    /**
+     * Skapa ny profil
+     */
+    createProfile(name, avatar = '👤') {
+        const profiles = this.getAllProfiles();
+        const newProfile = {
+            id: 'profile_' + Date.now(),
+            name: name,
+            avatar: avatar,
+            createdAt: new Date().toISOString()
+        };
+        profiles.push(newProfile);
+        this.set('profiles', profiles);
+
+        // Initiera profildata
+        this.setCurrentProfile(newProfile.id);
+        this.saveProfile(this.getDefaultProfileData(name, avatar));
+
+        return newProfile;
+    },
+
+    /**
+     * Ta bort en profil
+     */
+    deleteProfile(profileId) {
+        let profiles = this.getAllProfiles();
+        profiles = profiles.filter(p => p.id !== profileId);
+        this.set('profiles', profiles);
+
+        // Rensa profildata
+        const keys = Object.keys(localStorage).filter(k =>
+            k.includes(`profile_${profileId}_`)
+        );
+        keys.forEach(k => localStorage.removeItem(k));
+
+        // Om det var aktuell profil, byt till första tillgängliga
+        if (this.getCurrentProfileId() === profileId) {
+            if (profiles.length > 0) {
+                this.setCurrentProfile(profiles[0].id);
+            } else {
+                this.setCurrentProfile(null);
+            }
+        }
+
+        return true;
+    },
+
+    /**
+     * Hämta profilinfo (namn, avatar) för en profil
+     */
+    getProfileInfo(profileId) {
+        const profiles = this.getAllProfiles();
+        return profiles.find(p => p.id === profileId) || null;
+    },
+
+    /**
+     * Standard profildata
+     */
+    getDefaultProfileData(name = '', avatar = '👤') {
+        return {
+            name: name,
+            avatar: avatar,
             level: 1,
             xp: 0,
             totalPoints: 0,
@@ -78,36 +186,45 @@ const Storage = {
             },
             createdAt: new Date().toISOString()
         };
-
-        return this.get('profile', defaultProfile);
     },
 
     /**
-     * Spara användarprofil
+     * Hämta eller skapa användarprofil (profilspecifik)
+     */
+    getProfile() {
+        const profileId = this.getCurrentProfileId();
+        if (!profileId) {
+            return this.getDefaultProfileData();
+        }
+        return this.getForProfile('data', this.getDefaultProfileData());
+    },
+
+    /**
+     * Spara användarprofil (profilspecifik)
      */
     saveProfile(profile) {
-        return this.set('profile', profile);
+        return this.setForProfile('data', profile);
     },
 
     /**
-     * Hämta progress för ett ämne
+     * Hämta progress för ett ämne (profilspecifik)
      */
     getTopicProgress(topicId) {
-        const progress = this.get('topicProgress', {});
+        const progress = this.getForProfile('topicProgress', {});
         return progress[topicId] || { completed: 0, total: 0, exercises: {} };
     },
 
     /**
-     * Spara progress för ett ämne
+     * Spara progress för ett ämne (profilspecifik)
      */
     saveTopicProgress(topicId, data) {
-        const progress = this.get('topicProgress', {});
+        const progress = this.getForProfile('topicProgress', {});
         progress[topicId] = data;
-        return this.set('topicProgress', progress);
+        return this.setForProfile('topicProgress', progress);
     },
 
     /**
-     * Markera en uppgift som slutförd
+     * Markera en uppgift som slutförd (profilspecifik)
      */
     markExerciseComplete(exerciseId, points, attempts, usedHint) {
         const profile = this.getProfile();
@@ -116,18 +233,26 @@ const Storage = {
             profile.completedExercises.push(exerciseId);
         }
 
-        // Spara detaljer om uppgiften
-        const exerciseData = this.get('exerciseDetails', {});
+        // Spara detaljer om uppgiften (profilspecifik)
+        const exerciseData = this.getForProfile('exerciseDetails', {});
         exerciseData[exerciseId] = {
             completedAt: new Date().toISOString(),
             points,
             attempts,
-            usedHint
+            usedHint,
+            firstTrySuccess: attempts === 1
         };
-        this.set('exerciseDetails', exerciseData);
+        this.setForProfile('exerciseDetails', exerciseData);
 
         this.saveProfile(profile);
         return true;
+    },
+
+    /**
+     * Hämta detaljerad uppgiftsdata (profilspecifik)
+     */
+    getExerciseDetails() {
+        return this.getForProfile('exerciseDetails', {});
     },
 
     /**
@@ -258,6 +383,131 @@ const Storage = {
             console.error('Import error:', e);
             return false;
         }
+    },
+
+    // ==========================================
+    // PROVBEREDSKAP - Hur redo är eleven för prov?
+    // ==========================================
+
+    /**
+     * Beräkna provberedskap för hela kapitlet
+     * Returnerar objekt med total score och per-ämne breakdown
+     */
+    calculateTestReadiness(totalExercises) {
+        const profile = this.getProfile();
+        const exerciseDetails = this.getExerciseDetails();
+
+        // Antal klarade uppgifter
+        const completedCount = profile.completedExercises.length;
+
+        // Beräkna accuracy (rätt på första försöket)
+        let firstTryCount = 0;
+        let totalAttempts = 0;
+
+        Object.values(exerciseDetails).forEach(detail => {
+            if (detail.firstTrySuccess || detail.attempts === 1) {
+                firstTryCount++;
+            }
+            totalAttempts++;
+        });
+
+        const accuracy = totalAttempts > 0 ? (firstTryCount / totalAttempts) : 0;
+
+        // Beräkna täckning (hur väl spritt över ämnen)
+        const topicCoverage = this.calculateTopicCoverage(profile.completedExercises);
+
+        // Total beredskap (viktad beräkning)
+        // 50% baserat på antal klarade
+        // 30% baserat på accuracy
+        // 20% baserat på spridning över ämnen
+        const completionScore = totalExercises > 0 ? (completedCount / totalExercises) : 0;
+        const coverageScore = topicCoverage.coverageScore;
+
+        const totalReadiness = Math.round(
+            (completionScore * 0.50 + accuracy * 0.30 + coverageScore * 0.20) * 100
+        );
+
+        // Bestäm nivå och meddelande
+        let level, message, color;
+        if (totalReadiness >= 90) {
+            level = 'excellent';
+            message = 'Utmärkt! Du är mycket väl förberedd för provet!';
+            color = '#4CAF50';
+        } else if (totalReadiness >= 70) {
+            level = 'good';
+            message = 'Bra! Du har god kunskap, fortsätt öva på svagare områden.';
+            color = '#8BC34A';
+        } else if (totalReadiness >= 50) {
+            level = 'moderate';
+            message = 'På god väg! Fokusera på de ämnen du inte övat så mycket på.';
+            color = '#FFC107';
+        } else if (totalReadiness >= 25) {
+            level = 'developing';
+            message = 'Du har börjat bra! Fortsätt öva för att bli mer förberedd.';
+            color = '#FF9800';
+        } else {
+            level = 'beginning';
+            message = 'Börja med att göra fler uppgifter för att bygga upp kunskap.';
+            color = '#F44336';
+        }
+
+        return {
+            totalReadiness,
+            level,
+            message,
+            color,
+            stats: {
+                completedCount,
+                totalExercises,
+                completionPercent: Math.round(completionScore * 100),
+                accuracy: Math.round(accuracy * 100),
+                firstTryCount,
+                totalAttempts
+            },
+            topicBreakdown: topicCoverage.breakdown
+        };
+    },
+
+    /**
+     * Beräkna täckning per ämne
+     */
+    calculateTopicCoverage(completedExercises) {
+        const topics = {
+            '3.1': { name: 'Omkrets och Area', completed: 0, total: 10 },
+            '3.2': { name: 'Cirkelns Area', completed: 0, total: 7 },
+            '3.3': { name: 'Volym och Begränsningsarea', completed: 0, total: 4 },
+            '3.4': { name: 'Enheter för Volym', completed: 0, total: 4 },
+            '3.5': { name: 'Prisma och Pyramid', completed: 0, total: 4 },
+            '3.6': { name: 'Cylinder, Kon och Klot', completed: 0, total: 6 }
+        };
+
+        // Räkna klarade per ämne
+        completedExercises.forEach(exId => {
+            const topicId = exId.split('.').slice(0, 2).join('.');
+            if (topics[topicId]) {
+                topics[topicId].completed++;
+            }
+        });
+
+        // Beräkna coverage score (hur jämnt fördelat)
+        let totalCoverage = 0;
+        const breakdown = [];
+
+        Object.entries(topics).forEach(([id, topic]) => {
+            const percent = topic.total > 0 ? (topic.completed / topic.total) : 0;
+            totalCoverage += percent;
+            breakdown.push({
+                id,
+                name: topic.name,
+                completed: topic.completed,
+                total: topic.total,
+                percent: Math.round(percent * 100)
+            });
+        });
+
+        const coverageScore = totalCoverage / Object.keys(topics).length;
+
+        return { coverageScore, breakdown };
     }
 };
 

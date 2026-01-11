@@ -176,6 +176,43 @@
                         </div>
                     </div>
 
+                    <!-- Test Readiness / Provberedskap -->
+                    <div class="test-readiness-card" id="test-readiness-card">
+                        <div class="readiness-header">
+                            <h3>📊 Provberedskap - Kapitel 3</h3>
+                            <button class="btn btn-sm" onclick="app.showReadinessDetails()">Visa detaljer</button>
+                        </div>
+                        <div class="readiness-content">
+                            <div class="readiness-gauge">
+                                <div class="gauge-circle" id="readiness-gauge">
+                                    <svg viewBox="0 0 100 100">
+                                        <circle class="gauge-bg" cx="50" cy="50" r="45" />
+                                        <circle class="gauge-fill" id="gauge-fill" cx="50" cy="50" r="45" />
+                                    </svg>
+                                    <div class="gauge-text">
+                                        <span class="gauge-percent" id="readiness-percent">0%</span>
+                                        <span class="gauge-label">redo</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="readiness-info">
+                                <p class="readiness-message" id="readiness-message">Börja öva för att se din provberedskap!</p>
+                                <div class="readiness-stats">
+                                    <div class="readiness-stat">
+                                        <span class="stat-icon">✅</span>
+                                        <span id="readiness-completed">0/35</span>
+                                        <span class="stat-desc">uppgifter</span>
+                                    </div>
+                                    <div class="readiness-stat">
+                                        <span class="stat-icon">🎯</span>
+                                        <span id="readiness-accuracy">0%</span>
+                                        <span class="stat-desc">rätt direkt</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Continue Learning -->
                     <div class="section-header">
                         <h3>Fortsätt lära dig</h3>
@@ -445,7 +482,64 @@
         </div>
     </div>
 
-    <!-- Welcome Modal (First Time) -->
+    <!-- Profile Selector Modal -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>👥 Välj profil</h3>
+            </div>
+            <div class="modal-body">
+                <p class="profile-modal-subtitle">Vem ska öva idag?</p>
+                <div class="profiles-list" id="profiles-list">
+                    <!-- Profiler läggs till dynamiskt -->
+                </div>
+                <button class="btn btn-secondary btn-new-profile" onclick="app.showCreateProfile()">
+                    <span>➕</span> Skapa ny profil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Profile Modal -->
+    <div id="create-profile-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✨ Skapa ny profil</h3>
+                <button class="modal-close" onclick="app.closeModal('create-profile-modal')">&times;</button>
+            </div>
+            <div class="modal-body welcome-body">
+                <div class="welcome-form">
+                    <label for="new-profile-name">Vad heter du?</label>
+                    <input type="text" id="new-profile-name" placeholder="Skriv ditt namn..." maxlength="20">
+                </div>
+                <div class="avatar-selection">
+                    <label>Välj din avatar:</label>
+                    <div class="avatar-grid" id="avatar-grid">
+                        <button class="avatar-choice selected" data-avatar="👤">👤</button>
+                        <button class="avatar-choice" data-avatar="🧑‍🎓">🧑‍🎓</button>
+                        <button class="avatar-choice" data-avatar="👩‍🔬">👩‍🔬</button>
+                        <button class="avatar-choice" data-avatar="🧒">🧒</button>
+                        <button class="avatar-choice" data-avatar="👧">👧</button>
+                        <button class="avatar-choice" data-avatar="🦊">🦊</button>
+                        <button class="avatar-choice" data-avatar="🐱">🐱</button>
+                        <button class="avatar-choice" data-avatar="🦁">🦁</button>
+                        <button class="avatar-choice" data-avatar="🐼">🐼</button>
+                        <button class="avatar-choice" data-avatar="🦄">🦄</button>
+                        <button class="avatar-choice" data-avatar="🐉">🐉</button>
+                        <button class="avatar-choice" data-avatar="🤖">🤖</button>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg" onclick="app.createNewProfile()">
+                    Skapa profil 🚀
+                </button>
+                <button class="btn btn-secondary btn-cancel-profile" onclick="app.closeModal('create-profile-modal'); app.showProfileSelector();">
+                    ← Tillbaka
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal (First Time - endast om inga profiler finns) -->
     <div id="welcome-modal" class="modal">
         <div class="modal-content">
             <div class="modal-body welcome-body">
@@ -462,6 +556,19 @@
                 <div class="welcome-form">
                     <label for="welcome-name-input">Vad heter du?</label>
                     <input type="text" id="welcome-name-input" placeholder="Skriv ditt namn..." maxlength="20">
+                </div>
+                <div class="avatar-selection">
+                    <label>Välj din avatar:</label>
+                    <div class="avatar-grid" id="welcome-avatar-grid">
+                        <button class="avatar-choice selected" data-avatar="👤">👤</button>
+                        <button class="avatar-choice" data-avatar="🧑‍🎓">🧑‍🎓</button>
+                        <button class="avatar-choice" data-avatar="👩‍🔬">👩‍🔬</button>
+                        <button class="avatar-choice" data-avatar="🧒">🧒</button>
+                        <button class="avatar-choice" data-avatar="👧">👧</button>
+                        <button class="avatar-choice" data-avatar="🦊">🦊</button>
+                        <button class="avatar-choice" data-avatar="🐱">🐱</button>
+                        <button class="avatar-choice" data-avatar="🦁">🦁</button>
+                    </div>
                 </div>
 
                 <button class="btn btn-primary btn-lg" onclick="app.startJourney()">

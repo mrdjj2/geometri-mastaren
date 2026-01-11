@@ -26,28 +26,37 @@ const App = {
     usedHint: false,
     attempts: 0,
 
+    // Vald avatar för ny profil
+    selectedAvatar: '👤',
+
     /**
      * Initiera applikationen
      */
     init() {
         console.log('🎮 Geometri-Spel startar...');
 
-        // Kolla om första besöket
-        const profile = Storage.getProfile();
-        if (!profile.name) {
-            this.showWelcomeModal();
-        } else {
-            Storage.updateStreak();
-        }
-
         // Sätt upp navigation
         this.setupNavigation();
 
-        // Rendera startvyn
-        this.navigate('dashboard');
+        // Sätt upp avatar-väljare
+        this.setupAvatarSelection();
 
-        // Uppdatera header
-        this.updateHeader();
+        // Kolla profiler
+        const profiles = Storage.getAllProfiles();
+        const currentProfileId = Storage.getCurrentProfileId();
+
+        if (profiles.length === 0) {
+            // Inga profiler - visa välkomstmodal för att skapa första
+            this.showWelcomeModal();
+        } else if (!currentProfileId || !profiles.find(p => p.id === currentProfileId)) {
+            // Ingen aktiv profil vald - visa profilväljare
+            this.showProfileSelector();
+        } else {
+            // Profil finns - fortsätt som vanligt
+            Storage.updateStreak();
+            this.navigate('dashboard');
+            this.updateHeader();
+        }
 
         // Dölj laddningsskärmen
         const loadingScreen = document.getElementById('loading-screen');
@@ -76,6 +85,185 @@ const App = {
                 });
             }
         }
+    },
+
+    /**
+     * Sätt upp avatar-väljare för modaler
+     */
+    setupAvatarSelection() {
+        // Välkomst-modal avatarer
+        document.querySelectorAll('#welcome-modal .avatar-choice').forEach(choice => {
+            choice.addEventListener('click', () => {
+                document.querySelectorAll('#welcome-modal .avatar-choice').forEach(c => c.classList.remove('selected'));
+                choice.classList.add('selected');
+                this.selectedAvatar = choice.dataset.avatar;
+            });
+        });
+
+        // Skapa profil-modal avatarer
+        document.querySelectorAll('#create-profile-modal .avatar-choice').forEach(choice => {
+            choice.addEventListener('click', () => {
+                document.querySelectorAll('#create-profile-modal .avatar-choice').forEach(c => c.classList.remove('selected'));
+                choice.classList.add('selected');
+                this.selectedAvatar = choice.dataset.avatar;
+            });
+        });
+    },
+
+    /**
+     * Visa profilväljare
+     */
+    showProfileSelector() {
+        const modal = document.getElementById('profile-modal');
+        if (!modal) return;
+
+        this.renderProfilesList();
+        modal.classList.add('active');
+    },
+
+    /**
+     * Rendera profillistan
+     */
+    renderProfilesList() {
+        const container = document.getElementById('profiles-list');
+        if (!container) return;
+
+        const profiles = Storage.getAllProfiles();
+        const currentProfileId = Storage.getCurrentProfileId();
+
+        if (profiles.length === 0) {
+            container.innerHTML = '<p class="no-profiles">Inga profiler ännu. Skapa din första!</p>';
+            return;
+        }
+
+        container.innerHTML = profiles.map(profile => `
+            <div class="profile-item ${profile.id === currentProfileId ? 'active' : ''}"
+                 data-profile-id="${profile.id}">
+                <div class="profile-avatar">${profile.avatar || '👤'}</div>
+                <div class="profile-info">
+                    <span class="profile-name">${profile.name}</span>
+                </div>
+                <button class="btn-delete-profile" data-profile-id="${profile.id}" title="Ta bort profil">
+                    🗑️
+                </button>
+            </div>
+        `).join('');
+
+        // Lägg till klickhändelser för att välja profil
+        container.querySelectorAll('.profile-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                // Ignorera om man klickar på delete-knappen
+                if (e.target.classList.contains('btn-delete-profile')) return;
+                const profileId = item.dataset.profileId;
+                this.selectProfile(profileId);
+            });
+        });
+
+        // Lägg till klickhändelser för att ta bort profil
+        container.querySelectorAll('.btn-delete-profile').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const profileId = btn.dataset.profileId;
+                this.confirmDeleteProfile(profileId);
+            });
+        });
+    },
+
+    /**
+     * Visa modal för att skapa ny profil
+     */
+    showCreateProfile() {
+        this.selectedAvatar = '👤'; // Återställ vald avatar
+
+        // Återställ avatar-val i modalen
+        document.querySelectorAll('#create-profile-modal .avatar-choice').forEach(c => {
+            c.classList.remove('selected');
+            if (c.dataset.avatar === '👤') c.classList.add('selected');
+        });
+
+        // Töm namn-fältet
+        const nameInput = document.getElementById('new-profile-name');
+        if (nameInput) nameInput.value = '';
+
+        this.closeModal('profile-modal');
+        this.openModal('create-profile-modal');
+    },
+
+    /**
+     * Skapa ny profil
+     */
+    createNewProfile() {
+        const nameInput = document.getElementById('new-profile-name');
+        const name = nameInput?.value.trim();
+
+        if (!name) {
+            this.showToast('Ange ett namn för profilen', 'error');
+            return;
+        }
+
+        // Skapa profilen med vald avatar
+        const newProfile = Storage.createProfile(name, this.selectedAvatar);
+
+        this.closeModal('create-profile-modal');
+        this.showToast(`Välkommen, ${name}! 🎉`, 'success');
+
+        // Uppdatera och visa dashboard
+        Storage.updateStreak();
+        this.updateHeader();
+        this.navigate('dashboard');
+    },
+
+    /**
+     * Välj en profil
+     */
+    selectProfile(profileId) {
+        Storage.setCurrentProfile(profileId);
+        Storage.updateStreak();
+
+        this.closeModal('profile-modal');
+        this.updateHeader();
+        this.navigate('dashboard');
+
+        const profile = Storage.getProfile();
+        this.showToast(`Välkommen tillbaka, ${profile.name}!`, 'success');
+    },
+
+    /**
+     * Bekräfta borttagning av profil
+     */
+    confirmDeleteProfile(profileId) {
+        const profileInfo = Storage.getProfileInfo(profileId);
+        if (!profileInfo) return;
+
+        if (confirm(`Vill du verkligen ta bort profilen "${profileInfo.name}"? All progress kommer att raderas!`)) {
+            this.deleteProfile(profileId);
+        }
+    },
+
+    /**
+     * Ta bort en profil
+     */
+    deleteProfile(profileId) {
+        Storage.deleteProfile(profileId);
+
+        const profiles = Storage.getAllProfiles();
+        if (profiles.length === 0) {
+            // Inga profiler kvar - visa välkomstmodal
+            this.closeModal('profile-modal');
+            this.showWelcomeModal();
+        } else {
+            // Uppdatera profillistan
+            this.renderProfilesList();
+        }
+
+        this.showToast('Profilen har tagits bort', 'info');
+    },
+
+    /**
+     * Byt profil (från header eller inställningar)
+     */
+    switchProfile() {
+        this.showProfileSelector();
     },
 
     /**
@@ -365,6 +553,160 @@ const App = {
                 recentAchievements.innerHTML = '<p class="no-achievements">Lös uppgifter för att låsa upp achievements!</p>';
             }
         }
+
+        // Uppdatera provberedskap
+        this.updateTestReadiness();
+    },
+
+    /**
+     * Uppdatera provberedskapsvisning
+     */
+    updateTestReadiness() {
+        // Räkna totalt antal uppgifter
+        const totalExercises = Object.values(Exercises.topics).reduce((sum, topic) => {
+            return sum + Exercises.getByTopic(topic.id).length;
+        }, 0);
+
+        const readiness = Storage.calculateTestReadiness(totalExercises);
+
+        // Uppdatera procent-text
+        const percentEl = document.getElementById('readiness-percent');
+        if (percentEl) {
+            percentEl.textContent = readiness.totalReadiness + '%';
+        }
+
+        // Uppdatera gauge-cirkel
+        const gaugeFill = document.getElementById('gauge-fill');
+        if (gaugeFill) {
+            // SVG cirkel animation (stroke-dashoffset)
+            const circumference = 2 * Math.PI * 45; // r=45
+            const offset = circumference - (readiness.totalReadiness / 100) * circumference;
+            gaugeFill.style.strokeDasharray = circumference;
+            gaugeFill.style.strokeDashoffset = offset;
+
+            // Färg baserad på nivå
+            gaugeFill.style.stroke = readiness.color;
+        }
+
+        // Uppdatera meddelande
+        const messageEl = document.getElementById('readiness-message');
+        if (messageEl) {
+            messageEl.textContent = readiness.message;
+        }
+
+        // Uppdatera statistik
+        const statsContainer = document.getElementById('readiness-stats');
+        if (statsContainer) {
+            statsContainer.innerHTML = `
+                <div class="readiness-stat">
+                    <span class="stat-value">${readiness.stats.completedCount}/${readiness.stats.totalExercises}</span>
+                    <span class="stat-label">uppgifter</span>
+                </div>
+                <div class="readiness-stat">
+                    <span class="stat-value">${readiness.stats.accuracy}%</span>
+                    <span class="stat-label">rätt första gången</span>
+                </div>
+            `;
+        }
+    },
+
+    /**
+     * Visa detaljerad provberedskapsinfo
+     */
+    showReadinessDetails() {
+        const totalExercises = Object.values(Exercises.topics).reduce((sum, topic) => {
+            return sum + Exercises.getByTopic(topic.id).length;
+        }, 0);
+
+        const readiness = Storage.calculateTestReadiness(totalExercises);
+
+        // Skapa modal-innehåll
+        const modal = document.getElementById('formula-modal');
+        const content = modal?.querySelector('.modal-body') || modal;
+
+        if (!content) return;
+
+        content.innerHTML = `
+            <h3>📊 Detaljerad Provberedskap</h3>
+            <div class="readiness-detail-header">
+                <div class="readiness-overall">
+                    <span class="big-percent" style="color: ${readiness.color}">${readiness.totalReadiness}%</span>
+                    <span class="readiness-level">${readiness.message}</span>
+                </div>
+            </div>
+
+            <div class="readiness-breakdown">
+                <h4>📚 Per ämne</h4>
+                <div class="topic-readiness-list">
+                    ${readiness.topicBreakdown.map(topic => `
+                        <div class="topic-readiness-item">
+                            <div class="topic-readiness-info">
+                                <span class="topic-name">${topic.name}</span>
+                                <span class="topic-progress">${topic.completed}/${topic.total}</span>
+                            </div>
+                            <div class="topic-readiness-bar">
+                                <div class="topic-bar-fill" style="width: ${topic.percent}%; background: ${this.getColorForPercent(topic.percent)}"></div>
+                            </div>
+                            <span class="topic-percent">${topic.percent}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+
+            <div class="readiness-tips">
+                <h4>💡 Tips</h4>
+                ${this.getReadinessTips(readiness)}
+            </div>
+
+            <button class="btn btn-primary" onclick="app.closeModal('formula-modal')">Stäng</button>
+        `;
+
+        modal.classList.add('active');
+    },
+
+    /**
+     * Hämta färg baserat på procent
+     */
+    getColorForPercent(percent) {
+        if (percent >= 80) return '#4CAF50';
+        if (percent >= 60) return '#8BC34A';
+        if (percent >= 40) return '#FFC107';
+        if (percent >= 20) return '#FF9800';
+        return '#F44336';
+    },
+
+    /**
+     * Generera tips baserat på provberedskap
+     */
+    getReadinessTips(readiness) {
+        const tips = [];
+
+        // Hitta svagaste ämnen
+        const weakTopics = readiness.topicBreakdown
+            .filter(t => t.percent < 50)
+            .sort((a, b) => a.percent - b.percent);
+
+        if (weakTopics.length > 0) {
+            tips.push(`<p>🎯 Fokusera på: <strong>${weakTopics.slice(0, 2).map(t => t.name).join(' och ')}</strong></p>`);
+        }
+
+        if (readiness.stats.accuracy < 70) {
+            tips.push('<p>📝 Ta tid på dig och dubbelkolla svaren för bättre träffsäkerhet.</p>');
+        }
+
+        if (readiness.stats.completedCount < 10) {
+            tips.push('<p>🚀 Fortsätt öva! Ju fler uppgifter du gör, desto mer förberedd blir du.</p>');
+        }
+
+        if (readiness.totalReadiness >= 80) {
+            tips.push('<p>🌟 Bra jobbat! Du är på god väg att bemästra geometri!</p>');
+        }
+
+        if (tips.length === 0) {
+            tips.push('<p>👍 Fortsätt öva jämnt över alla ämnen för bästa resultat!</p>');
+        }
+
+        return tips.join('');
     },
 
     /**
@@ -1140,19 +1482,20 @@ const App = {
         const nameInput = document.getElementById('welcome-name-input');
         const name = nameInput?.value.trim() || 'Elev';
 
-        const profile = Storage.getProfile();
-        profile.name = name;
-        Storage.saveProfile(profile);
+        // Skapa ny profil med vald avatar
+        Storage.createProfile(name, this.selectedAvatar);
 
         this.closeModal('welcome-modal');
         this.updateHeader();
-        this.renderDashboard();
+        this.navigate('dashboard');
 
         // Uppdatera välkomsttext
         const welcomeName = document.getElementById('welcome-name');
         if (welcomeName) {
             welcomeName.textContent = name;
         }
+
+        this.showToast(`Välkommen, ${name}! 🎉`, 'success');
     },
 
     /**
