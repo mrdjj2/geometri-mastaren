@@ -1095,7 +1095,7 @@ const Exercises = {
         {
             id: '3.2.43',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 43,
             title: 'Kyrkfönster',
             description: 'Ett kyrkfönster har formen av en rektangel med en halvcirkel ovanpå. Bredden är 2,35 m och totalhöjden är 4,5 m. Beräkna fönstrets omkrets och area. Avrunda till tiondel.',
@@ -1120,7 +1120,7 @@ const Exercises = {
         {
             id: '3.2.44',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 44,
             title: 'Tevasalongens mått',
             description: 'Mät i hela centimeter och beräkna tevasalongens (cirkelformad) omkrets och area. Skala 1:1000. Diameter på bilden: 3 cm.',
@@ -1147,7 +1147,7 @@ const Exercises = {
         {
             id: '3.2.45',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 45,
             title: 'Gräsfrö till idrottsplats',
             description: 'Hur många säckar gräsfrö går det åt för att så gräs på hela idrottsplatsen? Planen är 180 m × 100 m med halvcirklar på kortsidorna (diameter 100 m). En säck innehåller 20 kg och 1 kg gräsfrö räcker till 40 m².',
@@ -1173,7 +1173,7 @@ const Exercises = {
         {
             id: '3.2.46',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 46,
             title: 'Fyra cirklar i kvadrat',
             description: 'De fyra cirklarna är lika stora. Kvadratens sida är 6 cm. Beräkna arean av det område som är utanför cirklarna. Avrunda till tiondels kvadratcentimeter.',
@@ -1197,7 +1197,7 @@ const Exercises = {
         {
             id: '3.2.47',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 47,
             title: 'Halvcirkelns omkrets',
             description: 'När man ska räkna ut arean av en halvcirkel kan man använda formeln A = (π·r²)/2. Men när man ska räkna ut omkretsen av en halvcirkel kan man inte använda formeln O = (π·d)/2. Förklara varför.',
@@ -1220,7 +1220,7 @@ const Exercises = {
         {
             id: '3.2.48',
             topic: '3.2',
-            level: 2,
+            level: 3,
             number: 48,
             title: 'Lila och vitt område',
             description: 'Hur många procent större area har det lila området än det vita? Den inre cirkelns radie är 3 cm och den yttre cirkelns radie är 4 cm. Avrunda till hela procent.',
