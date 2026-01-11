@@ -990,14 +990,16 @@ input, select {
     font-weight: 600;
 }
 
-.input-wrapper.correct {
-    border-color: var(--success);
-    background: rgba(76, 175, 80, 0.1);
+.input-wrapper.correct,
+input.correct {
+    border-color: var(--success) !important;
+    background: rgba(76, 175, 80, 0.1) !important;
 }
 
-.input-wrapper.incorrect {
-    border-color: var(--error);
-    background: rgba(244, 67, 54, 0.1);
+.input-wrapper.incorrect,
+input.incorrect {
+    border-color: var(--error) !important;
+    background: rgba(244, 67, 54, 0.1) !important;
 }
 
 .exercise-actions {
@@ -2231,7 +2233,7 @@ input, select {
 
 .btn-delete-profile:hover {
     opacity: 1;
-    background: rgba(244, 67, 54, 0.1);
+    background: rgba(244, 67, 54, 0.1) !important;
 }
 
 .no-profiles {
@@ -2440,7 +2442,7 @@ input, select {
 }
 
 .calc-btn.calc-clear {
-    background: rgba(244, 67, 54, 0.1);
+    background: rgba(244, 67, 54, 0.1) !important;
     color: var(--error);
 }
 
