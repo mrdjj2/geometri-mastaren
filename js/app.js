@@ -1141,9 +1141,11 @@ const App = {
      */
     handleIncorrectAnswer() {
         // Skaka formuläret
-        const form = document.getElementById('answer-form');
-        form.classList.add('shake');
-        setTimeout(() => form.classList.remove('shake'), 500);
+        const form = document.getElementById('input-fields');
+        if (form) {
+            form.classList.add('shake');
+            setTimeout(() => form.classList.remove('shake'), 500);
+        }
 
         // Visa feedback
         const feedbackMessages = [
