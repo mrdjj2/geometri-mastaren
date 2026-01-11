@@ -197,9 +197,12 @@ const Shapes2D = {
 
         // Mått
         if (config.showMeasurements !== false) {
+            // Hämta bas från config.base eller sides[0]
+            const baseValue = config.base || (config.sides && config.sides[0]) || 'b';
+
             // Bas
             this.addDimension(svg, x1, y1 + 15, x2, y1 + 15,
-                `${config.base || 'b'} ${config.unit || 'cm'}`);
+                `${baseValue} ${config.unit || 'cm'}`);
 
             // Höjd
             const heightText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -209,6 +212,27 @@ const Shapes2D = {
             heightText.setAttribute('fill', this.colors.highlight);
             heightText.textContent = `h = ${config.height || '?'} cm`;
             svg.appendChild(heightText);
+
+            // Visa alla tre sidor om de finns
+            if (config.sides && config.sides.length >= 3) {
+                // Vänster sida (från topp till vänster bas)
+                const leftSideText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                leftSideText.setAttribute('x', (x1 + x3) / 2 - 25);
+                leftSideText.setAttribute('y', (y1 + y3) / 2);
+                leftSideText.setAttribute('font-size', this.defaults.fontSize);
+                leftSideText.setAttribute('fill', this.colors.stroke);
+                leftSideText.textContent = `${config.sides[1]} cm`;
+                svg.appendChild(leftSideText);
+
+                // Höger sida (från topp till höger bas)
+                const rightSideText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                rightSideText.setAttribute('x', (x2 + x3) / 2 + 5);
+                rightSideText.setAttribute('y', (y2 + y3) / 2);
+                rightSideText.setAttribute('font-size', this.defaults.fontSize);
+                rightSideText.setAttribute('fill', this.colors.stroke);
+                rightSideText.textContent = `${config.sides[2]} cm`;
+                svg.appendChild(rightSideText);
+            }
         }
 
         return svg;

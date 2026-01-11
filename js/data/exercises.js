@@ -67,7 +67,7 @@ const Exercises = {
             level: 1,
             number: 1,
             title: 'Triangelns omkrets och area',
-            description: 'Mät triangelns sidor i hela centimeter. Beräkna omkrets och area.',
+            description: 'Triangeln har sidorna 5 cm, 4 cm och 3 cm. Höjden är 3,2 cm. Beräkna omkrets och area.',
             visualization: {
                 type: 'triangle',
                 sides: [5, 4, 3],
@@ -222,7 +222,7 @@ const Exercises = {
             level: 1,
             number: 7,
             title: 'Sammansatt figur',
-            description: 'Mät i hela och halva centimeter. Beräkna sedan figurens omkrets och area.',
+            description: 'Den sammansatta figuren (L-form) har måtten: yttre bredd 6 cm, yttre höjd 4 cm, urtagets bredd 3 cm och urtagets höjd 2 cm. Beräkna figurens omkrets och area.',
             visualization: {
                 type: 'composite',
                 shape: 'L-shape',
@@ -798,7 +798,7 @@ const Exercises = {
             level: 1,
             number: 31,
             title: 'Hängsmyckets area',
-            description: 'Mät hängsmyckets diameter. Beräkna hängsmyckets area. Avrunda till hela kvadratcentimeter.',
+            description: 'Hängsmyckets diameter är 4 cm. Beräkna hängsmyckets area. Avrunda till hela kvadratcentimeter.',
             visualization: {
                 type: 'circle',
                 diameter: 4,
@@ -949,8 +949,8 @@ const Exercises = {
             topic: '3.2',
             level: 2,
             number: 37,
-            title: 'Mät cirkelns diameter',
-            description: 'Mät cirkelns diameter i hela centimeter och beräkna arean. Avrunda till hela kvadratcentimeter.',
+            title: 'Cirkelns area',
+            description: 'Cirkelns diameter är 5 cm. Beräkna arean. Avrunda till hela kvadratcentimeter.',
             visualization: {
                 type: 'circle',
                 diameter: 5,
@@ -1123,7 +1123,7 @@ const Exercises = {
             level: 3,
             number: 44,
             title: 'Tevasalongens mått',
-            description: 'Mät i hela centimeter och beräkna tevasalongens (cirkelformad) omkrets och area. Skala 1:1000. Diameter på bilden: 3 cm.',
+            description: 'Tevasalongen är cirkelformad. På kartan är diametern 3 cm. Skala 1:1000. Beräkna den verkliga omkretsen och arean.',
             visualization: {
                 type: 'circle',
                 mapDiameter: 3,
