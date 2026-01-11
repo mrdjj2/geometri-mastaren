@@ -466,6 +466,18 @@ const App = {
     updateHeader() {
         const profile = Storage.getProfile();
 
+        // Avatar
+        const avatarEl = document.getElementById('user-avatar');
+        if (avatarEl) {
+            avatarEl.innerHTML = `<span>${profile.avatar || '👤'}</span>`;
+        }
+
+        // Användarnamn
+        const userNameEl = document.getElementById('user-name');
+        if (userNameEl) {
+            userNameEl.textContent = profile.name || 'Elev';
+        }
+
         // Streak
         const streakEl = document.getElementById('streak-count');
         if (streakEl) {
@@ -479,10 +491,16 @@ const App = {
         }
 
         // Nivå
+        const levelInfo = Levels.getInfo(profile.level);
         const levelEl = document.getElementById('level-display');
         if (levelEl) {
-            const levelInfo = Levels.getInfo(profile.level);
             levelEl.innerHTML = `${levelInfo.icon} Nivå ${profile.level}`;
+        }
+
+        // Nivånamn i sidbaren
+        const levelNameEl = document.getElementById('user-level-name');
+        if (levelNameEl) {
+            levelNameEl.textContent = levelInfo.name;
         }
 
         // XP-bar
