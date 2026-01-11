@@ -1318,7 +1318,7 @@ const App = {
      * Rendera formelsida
      */
     renderFormulas() {
-        const container = document.getElementById('formulas-content');
+        const container = document.getElementById('formulas-container');
         if (!container) return;
 
         const formulas2D = Formulas.getAll2D();
