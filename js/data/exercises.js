@@ -226,7 +226,7 @@ const Exercises = {
             visualization: {
                 type: 'composite',
                 shape: 'L-shape',
-                measurements: [6, 4, 3, 2, 3, 2]
+                measurements: [6, 2, 3, 4]
             },
             inputs: [
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
