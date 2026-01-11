@@ -1366,12 +1366,12 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { volume: 430, surfaceArea: 460 },
+            answers: { volume: 430, surfaceArea: 370 },
             tolerance: 10,
             hints: [
-                { step: 1, text: 'V = längd × bredd × höjd = 12 × 4,5 × 8' },
+                { step: 1, text: 'V = längd × bredd × höjd = 12 × 4,5 × 8 = 432 ≈ 430 cm³' },
                 { step: 2, text: 'Begr.area = 2(lb + bh + hl)' },
-                { step: 3, text: '= 2(12×4,5 + 4,5×8 + 8×12) = 2(54 + 36 + 96)' }
+                { step: 3, text: '= 2(12×4,5 + 4,5×8 + 8×12) = 2(54 + 36 + 96) = 372 ≈ 370 cm²' }
             ],
             points: 20
         },
@@ -3453,7 +3453,7 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'weight', label: 'Vikt', unit: 'g', type: 'number' }
             ],
-            answers: { volume: 1.88, weight: 170 },
+            answers: { volume: 18.85, weight: 170 },
             tolerance: 10,
             hints: [
                 { step: 1, text: 'r = 0,02 cm, h = 15000 cm' },
@@ -3479,12 +3479,12 @@ const Exercises = {
                 { id: 'innerVolume', label: 'Inre volym', unit: 'cm³', type: 'number' },
                 { id: 'shellVolume', label: 'Skalets volym', unit: 'cm³', type: 'number' }
             ],
-            answers: { outerVolume: 180, innerVolume: 143, shellVolume: 37 },
+            answers: { outerVolume: 180, innerVolume: 137, shellVolume: 43 },
             tolerance: 3,
             hints: [
                 { step: 1, text: 'Yttre r = 3,5 cm, V = (4π × 3,5³) / 3 ≈ 180 cm³' },
-                { step: 2, text: 'Inre r = 3,2 cm, V = (4π × 3,2³) / 3 ≈ 137 cm³' },
-                { step: 3, text: 'Skal = 180 - 137 ≈ 43 cm³' }
+                { step: 2, text: 'Inre r = 3,5 - 0,3 = 3,2 cm, V = (4π × 3,2³) / 3 ≈ 137 cm³' },
+                { step: 3, text: 'Skalets volym = 180 - 137 = 43 cm³' }
             ],
             points: 30
         },
@@ -3546,7 +3546,7 @@ const Exercises = {
             id: 'mix.138',
             topic: '3.1',
             level: 1,
-            number: 7,
+            number: 138,
             title: 'Sammansatt figur',
             description: 'Beräkna figurens omkrets och area.',
             visualization: {
@@ -4196,12 +4196,12 @@ const Exercises = {
                 { id: 'side3', label: 'Tredje sidan', unit: 'cm', type: 'number' },
                 { id: 'lastArea', label: 'Sista sidoytornas area', unit: 'cm²', type: 'number' }
             ],
-            answers: { side1: 6, side2: 6, side3: 12, lastArea: 72 },
+            answers: { side1: 9, side2: 4, side3: 12, lastArea: 108 },
             tolerance: 2,
             hints: [
-                { step: 1, text: 'Om två ytor är 36 och 48: a×b=36, a×c=48' },
-                { step: 2, text: 'V = a×b×c = 432 → c = 432/36 = 12 cm' },
-                { step: 3, text: 'a = 48/12 = 4? Nej, testa: 6×6×12=432, ytor: 36, 72, 72' }
+                { step: 1, text: 'Om a×b=36 och b×c=48, och abc=432' },
+                { step: 2, text: 'c = 432/36 = 12, b = 48/12 = 4, a = 36/4 = 9' },
+                { step: 3, text: 'Kontroll: 9×4×12=432 ✓, ytor: 36, 48, 108' }
             ],
             points: 35
         }
