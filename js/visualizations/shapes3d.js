@@ -1438,15 +1438,20 @@ const Shapes3D = {
         const canvas = this.createCanvas(width, height);
         const ctx = canvas.getContext('2d');
 
-        const boxL = config.length || 20;
-        const boxW = config.width || 15;
-        const boxH = config.height || 10;
-        const sphereD = config.sphereDiameter || 5;
-        const scale = 4;
+        // Hämta parametrar från config
+        const sphereCount = config.sphereCount || 2;
+        const boxLength = config.boxLength || config.length || 12;
 
-        ctx.translate(width / 2, height / 2 + 30);
+        // Beräkna sfärdiameter baserat på låda och antal
+        const sphereD = boxLength / sphereCount;
+        const boxL = boxLength;
+        const boxW = sphereD;  // Lådan är lika bred som en sfär
+        const boxH = sphereD;  // Lådan är lika hög som en sfär
+        const scale = 6;
 
-        // Låda (isometrisk)
+        ctx.translate(width / 2, height / 2 + 20);
+
+        // Låda (isometrisk) - öppen topp för att visa kulorna
         const vertices = [
             { x: 0, y: 0, z: 0 },
             { x: boxL, y: 0, z: 0 },
@@ -1462,8 +1467,8 @@ const Shapes3D = {
             this.isoProject(v.x - boxL / 2, v.y - boxH / 2, v.z - boxW / 2, { scale })
         );
 
-        // Rita låda
-        ctx.globalAlpha = 0.3;
+        // Rita lådans framsida (transparent)
+        ctx.globalAlpha = 0.2;
         ctx.fillStyle = this.colors.side;
         ctx.beginPath();
         ctx.moveTo(projected[0].x, projected[0].y);
@@ -1473,9 +1478,11 @@ const Shapes3D = {
         ctx.closePath();
         ctx.fill();
 
+        // Rita lådans kanter
         ctx.globalAlpha = 1;
         ctx.strokeStyle = this.colors.stroke;
-        const edges = [[0, 1], [1, 2], [2, 3], [3, 0], [1, 5], [2, 6], [5, 6]];
+        ctx.lineWidth = 1.5;
+        const edges = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 4], [1, 5], [4, 5], [3, 7], [2, 6], [5, 6], [6, 7], [4, 7]];
         edges.forEach(([a, b]) => {
             ctx.beginPath();
             ctx.moveTo(projected[a].x, projected[a].y);
@@ -1483,20 +1490,38 @@ const Shapes3D = {
             ctx.stroke();
         });
 
-        // Rita några sfärer
+        // Rita sfärerna (exakt sphereCount stycken i rad)
         const sphereR = sphereD * scale / 2;
-        ctx.fillStyle = '#FFC107';
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 2; j++) {
-                const x = sphereD / 2 + i * sphereD - boxL / 2;
-                const z = sphereD / 2 + j * sphereD - boxW / 2;
-                const pos = this.isoProject(x, -boxH / 2 + sphereD / 2, z, { scale });
-                ctx.beginPath();
-                ctx.arc(pos.x, pos.y, sphereR * 0.8, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.stroke();
-            }
+        for (let i = 0; i < sphereCount; i++) {
+            const x = sphereD / 2 + i * sphereD - boxL / 2;
+            const y = -boxH / 2 + sphereD / 2;
+            const z = 0;
+            const pos = this.isoProject(x, y, z, { scale });
+
+            // Rita sfär med gradient för 3D-effekt
+            const gradient = ctx.createRadialGradient(
+                pos.x - sphereR * 0.3, pos.y - sphereR * 0.3, sphereR * 0.1,
+                pos.x, pos.y, sphereR * 0.9
+            );
+            gradient.addColorStop(0, '#FFE082');
+            gradient.addColorStop(0.5, '#FFC107');
+            gradient.addColorStop(1, '#FF8F00');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, sphereR * 0.9, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#E65100';
+            ctx.lineWidth = 1;
+            ctx.stroke();
         }
+
+        // Lägg till måttlinje för lådans längd
+        ctx.fillStyle = this.colors.text;
+        ctx.font = '14px Arial';
+        ctx.textAlign = 'center';
+        const bottomY = projected[0].y + 25;
+        ctx.fillText(`${boxLength} cm`, 0, bottomY);
 
         return canvas;
     },
