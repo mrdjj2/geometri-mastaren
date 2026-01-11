@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lär dig geometri på ett roligt sätt med interaktiva övningar och spel">
+    <meta name="theme-color" content="#667eea">
+    <title>Geometri-Mästaren - Lär dig geometri!</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <p>Laddar Geometri-Mästaren...</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="app-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button id="menu-btn" class="icon-btn" aria-label="Meny">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <h1 class="logo" onclick="app.navigate('dashboard')">
+                    <span class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="12,2 22,20 2,20" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </span>
+                    Geometri-Mästaren
+                </h1>
+            </div>
+            <div class="header-right">
+                <div class="streak-display" id="streak-display" title="Dagar i rad">
+                    <span class="streak-icon">🔥</span>
+                    <span class="streak-count">0</span>
+                </div>
+                <div class="points-display" id="points-display" title="Dina poäng">
+                    <span class="points-icon">⭐</span>
+                    <span class="points-count">0</span>
+                </div>
+                <div class="level-badge" id="level-badge" title="Din nivå">
+                    <span class="level-number">1</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info">
+                    <div class="avatar" id="user-avatar">
+                        <span>👤</span>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-name">Elev</span>
+                        <span class="user-level" id="user-level-name">Nybörjare</span>
+                    </div>
+                </div>
+                <button class="close-sidebar" onclick="app.toggleSidebar()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="xp-bar-container">
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xp-fill" style="width: 0%"></div>
+                </div>
+                <span class="xp-text" id="xp-text">0 / 100 XP</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Översikt</span>
+                </li>
+                <li class="nav-item" data-page="topics">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">Ämnen</span>
+                </li>
+                <li class="nav-item" data-page="achievements">
+                    <span class="nav-icon">🏆</span>
+                    <span class="nav-text">Prestationer</span>
+                </li>
+                <li class="nav-item" data-page="formulas">
+                    <span class="nav-icon">📐</span>
+                    <span class="nav-text">Formelblad</span>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Inställningar</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <p class="version">Version 1.0</p>
+            </div>
+        </nav>
+
+        <!-- Sidebar Overlay -->
+        <div id="sidebar-overlay" class="sidebar-overlay" onclick="app.toggleSidebar()"></div>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="main-content">
+
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view active">
+                <div class="dashboard">
+                    <!-- Welcome Card -->
+                    <div class="welcome-card">
+                        <div class="welcome-content">
+                            <h2>Välkommen tillbaka, <span id="welcome-name">Elev</span>!</h2>
+                            <p id="welcome-message">Fortsätt där du slutade och bli en geometri-mästare!</p>
+                        </div>
+                        <div class="welcome-illustration">
+                            <svg viewBox="0 0 120 120" class="welcome-shapes">
+                                <circle cx="30" cy="30" r="25" fill="var(--topic-3-2)" opacity="0.8"/>
+                                <rect x="60" y="50" width="50" height="50" fill="var(--topic-3-1)" opacity="0.8"/>
+                                <polygon points="90,10 120,60 60,60" fill="var(--topic-3-5)" opacity="0.8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-completed">0</span>
+                                <span class="stat-label">Klarade uppgifter</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✨</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-accuracy">0%</span>
+                                <span class="stat-label">Rätt på första försöket</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-time">0 min</span>
+                                <span class="stat-label">Total övningstid</span>
+                            </div>
+                        </div>
+                        <div class="stat-card streak-card">
+                            <div class="stat-icon">🔥</div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-streak">0 dagar</span>
+                                <span class="stat-label">Nuvarande streak</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Continue Learning -->
+                    <div class="section-header">
+                        <h3>Fortsätt lära dig</h3>
+                    </div>
+
+                    <div class="topics-grid" id="topics-grid">
+                        <!-- Topics will be inserted by JavaScript -->
+                    </div>
+
+                    <!-- Recent Achievements -->
+                    <div class="section-header">
+                        <h3>Senaste prestationer</h3>
+                        <a href="#" onclick="app.navigate('achievements'); return false;" class="see-all">Se alla →</a>
+                    </div>
+
+                    <div class="achievements-row" id="recent-achievements">
+                        <!-- Achievements will be inserted by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Topics List View -->
+            <section id="view-topics" class="view">
+                <div class="page-header">
+                    <h2>Alla ämnen</h2>
+                    <p>Välj ett ämne för att börja öva</p>
+                </div>
+                <div class="topics-list" id="topics-list">
+                    <!-- Topics will be inserted by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Topic Detail View (Exercise List) -->
+            <section id="view-topic-detail" class="view">
+                <div class="page-header">
+                    <button class="back-btn" onclick="app.navigate('topics')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15,18 9,12 15,6"></polyline>
+                        </svg>
+                        Tillbaka
+                    </button>
+                    <h2 id="topic-title">Ämne</h2>
+                    <div class="topic-progress-bar">
+                        <div class="progress-fill" id="topic-progress-fill"></div>
+                    </div>
+                    <p id="topic-progress-text">0 av 0 uppgifter klara</p>
+                </div>
+
+                <div class="level-tabs">
+                    <button class="level-tab active" data-level="1">Nivå 1 (ETT)</button>
+                    <button class="level-tab" data-level="2">Nivå 2 (TVÅ)</button>
+                    <button class="level-tab" data-level="3">Nivå 3 (TRE)</button>
+                </div>
+
+                <div class="exercises-list" id="exercises-list">
+                    <!-- Exercises will be inserted by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Exercise View -->
+            <section id="view-exercise" class="view">
+                <div class="exercise-container">
+                    <!-- Exercise Header -->
+                    <div class="exercise-header">
+                        <button class="back-btn" id="exercise-back-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15,18 9,12 15,6"></polyline>
+                            </svg>
+                            Tillbaka
+                        </button>
+                        <div class="exercise-info">
+                            <span class="exercise-number" id="exercise-number">Uppgift 1</span>
+                            <span class="exercise-points" id="exercise-points">⭐ 15 poäng</span>
+                        </div>
+                    </div>
+
+                    <!-- Visualization Area -->
+                    <div class="visualization-container" id="visualization-container">
+                        <div class="visualization" id="visualization">
+                            <!-- SVG or Canvas will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Exercise Content -->
+                    <div class="exercise-content">
+                        <h3 class="exercise-title" id="exercise-title">Uppgift</h3>
+                        <p class="exercise-description" id="exercise-description">
+                            Beskrivning av uppgiften...
+                        </p>
+
+                        <!-- Input Fields -->
+                        <div class="input-fields" id="input-fields">
+                            <!-- Inputs will be inserted by JavaScript -->
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="exercise-actions">
+                            <button class="btn btn-hint" id="hint-btn" onclick="app.showHint()">
+                                <span class="btn-icon">💡</span>
+                                Ledtråd
+                            </button>
+                            <button class="btn btn-formula" onclick="app.showFormulas()">
+                                <span class="btn-icon">📐</span>
+                                Formler
+                            </button>
+                            <button class="btn btn-primary btn-check" id="check-btn" onclick="app.checkAnswer()">
+                                <span class="btn-icon">✓</span>
+                                Kontrollera
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements View -->
+            <section id="view-achievements" class="view">
+                <div class="page-header">
+                    <h2>Dina prestationer</h2>
+                    <p>Samla alla achievements och bli en matte-mästare!</p>
+                </div>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Achievements will be inserted by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Formulas View -->
+            <section id="view-formulas" class="view">
+                <div class="page-header">
+                    <h2>Formelblad</h2>
+                    <p>Alla formler du behöver för geometri</p>
+                </div>
+                <div class="formulas-container" id="formulas-container">
+                    <!-- Formulas will be inserted by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Settings View -->
+            <section id="view-settings" class="view">
+                <div class="page-header">
+                    <h2>Inställningar</h2>
+                </div>
+                <div class="settings-container">
+                    <div class="setting-group">
+                        <h3>Profil</h3>
+                        <div class="setting-item">
+                            <label for="setting-name">Ditt namn</label>
+                            <input type="text" id="setting-name" placeholder="Ange ditt namn">
+                        </div>
+                        <div class="setting-item">
+                            <label>Välj avatar</label>
+                            <div class="avatar-selector" id="avatar-selector">
+                                <button class="avatar-option" data-avatar="👤">👤</button>
+                                <button class="avatar-option" data-avatar="🧑‍🎓">🧑‍🎓</button>
+                                <button class="avatar-option" data-avatar="👩‍🔬">👩‍🔬</button>
+                                <button class="avatar-option" data-avatar="🧙">🧙</button>
+                                <button class="avatar-option" data-avatar="🦊">🦊</button>
+                                <button class="avatar-option" data-avatar="🐱">🐱</button>
+                                <button class="avatar-option" data-avatar="🦁">🦁</button>
+                                <button class="avatar-option" data-avatar="🐼">🐼</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Utseende</h3>
+                        <div class="setting-item">
+                            <label for="setting-theme">Tema</label>
+                            <select id="setting-theme">
+                                <option value="light">Ljust</option>
+                                <option value="dark">Mörkt</option>
+                                <option value="auto">Automatiskt</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>Animationer</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="setting-animations" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Ljud</h3>
+                        <div class="setting-item">
+                            <label>Ljudeffekter</label>
+                            <label class="toggle">
+                                <input type="checkbox" id="setting-sounds" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group danger-zone">
+                        <h3>Återställ</h3>
+                        <p class="setting-description">Varning: Detta raderar all din progress!</p>
+                        <button class="btn btn-danger" onclick="app.resetProgress()">
+                            Återställ all progress
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Hint Modal -->
+    <div id="hint-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>💡 Ledtråd</h3>
+                <button class="modal-close" onclick="app.closeModal('hint-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="hint-content">
+                <!-- Hint content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="hint-prev" onclick="app.prevHint()">← Föregående</button>
+                <span id="hint-step">Steg 1 av 3</span>
+                <button class="btn btn-primary" id="hint-next" onclick="app.nextHint()">Nästa →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formula Modal -->
+    <div id="formula-modal" class="modal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h3>📐 Formler</h3>
+                <button class="modal-close" onclick="app.closeModal('formula-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="formula-content">
+                <!-- Formula content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="result-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body result-body" id="result-content">
+                <!-- Result will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Popup -->
+    <div id="achievement-popup" class="achievement-popup">
+        <div class="achievement-content">
+            <div class="achievement-icon" id="achievement-icon">🏆</div>
+            <h3>Ny prestation!</h3>
+            <p class="achievement-name" id="achievement-name">Achievement Name</p>
+            <p class="achievement-desc" id="achievement-desc">Description</p>
+            <p class="achievement-points" id="achievement-points">+50 poäng</p>
+        </div>
+    </div>
+
+    <!-- Level Up Popup -->
+    <div id="levelup-popup" class="levelup-popup">
+        <div class="levelup-content">
+            <div class="levelup-stars">⭐⭐⭐</div>
+            <h2>Nivå upp!</h2>
+            <p class="levelup-level" id="levelup-level">Nivå 2</p>
+            <p class="levelup-name" id="levelup-name">Upptäckare</p>
+            <button class="btn btn-primary" onclick="app.closeLevelUp()">Fantastiskt!</button>
+        </div>
+    </div>
+
+    <!-- Welcome Modal (First Time) -->
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body welcome-body">
+                <div class="welcome-illustration-big">
+                    <svg viewBox="0 0 200 200" class="welcome-shapes-big">
+                        <circle cx="50" cy="50" r="40" fill="var(--topic-3-2)" opacity="0.8"/>
+                        <rect x="100" y="80" width="80" height="80" fill="var(--topic-3-1)" opacity="0.8"/>
+                        <polygon points="140,20 200,100 80,100" fill="var(--topic-3-5)" opacity="0.8"/>
+                    </svg>
+                </div>
+                <h2>Välkommen till Geometri-Mästaren!</h2>
+                <p>Lär dig geometri genom roliga övningar och samla poäng!</p>
+
+                <div class="welcome-form">
+                    <label for="welcome-name-input">Vad heter du?</label>
+                    <input type="text" id="welcome-name-input" placeholder="Skriv ditt namn..." maxlength="20">
+                </div>
+
+                <button class="btn btn-primary btn-lg" onclick="app.startJourney()">
+                    Börja äventyret! 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Claude och IDE
+.claude/
+.playwright-mcp/
+.vscode/
+
+# OS-filer
+.DS_Store
+Thumbs.db
+
+# Temporära filer
+*.log
+*.tmp
+
+# Källmaterial (behövs inte för webbsidan)
+Geometri_Kapitel3_Uppgifter.txt
+Photos/
