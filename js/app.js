@@ -537,7 +537,7 @@ const App = {
         }
 
         const statStreak = document.getElementById('stat-streak');
-        if (statStreak) statStreak.textContent = profile.streak + ' dagar';
+        if (statStreak) statStreak.textContent = profile.streak + (profile.streak === 1 ? ' dag' : ' dagar');
 
         // Rendera ämneskort
         const topicsGrid = document.getElementById('topics-grid');
@@ -1290,7 +1290,7 @@ const App = {
      * Rendera achievements-sida
      */
     renderAchievements() {
-        const container = document.getElementById('achievements-content');
+        const container = document.getElementById('achievements-grid');
         if (!container) return;
 
         const profile = Storage.getProfile();
@@ -1344,8 +1344,6 @@ const App = {
         const units = Formulas.getAllUnits();
 
         container.innerHTML = `
-            <h2>📐 Formelblad</h2>
-
             <div class="formula-section">
                 <h3>2D Figurer</h3>
                 <div class="formulas-grid">
@@ -1734,8 +1732,9 @@ const App = {
                 .replace(/π/g, Math.PI.toString())
                 .replace(/\^/g, '**');
 
-            // Säkerhetsvalidering - tillåt bara matematiska uttryck
-            if (!/^[\d\s+\-*/.()π\^e]+$/.test(expr.replace(/\*\*/g, '^'))) {
+            // Säkerhetsvalidering - tillåt bara matematiska uttryck (inkl Math.sqrt)
+            const cleanExpr = expr.replace(/Math\.sqrt/g, '').replace(/\*\*/g, '^');
+            if (!/^[\d\s+\-*/.()π\^e]+$/.test(cleanExpr)) {
                 throw new Error('Ogiltigt uttryck');
             }
 

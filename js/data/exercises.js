@@ -932,7 +932,7 @@ const Exercises = {
             id: 'mix.138',
             topic: '3.1',
             level: 1,
-            number: 138,
+            number: 7,
             title: 'Sammansatt figur',
             description: 'Beräkna figurens omkrets och area.',
             visualization: {
