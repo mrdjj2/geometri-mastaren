@@ -2244,3 +2244,349 @@ input, select {
 .btn-cancel-profile {
     margin-top: var(--spacing-sm);
 }
+
+/* ============================================
+   FLOATING ACTION BUTTONS
+   ============================================ */
+
+.fab-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: var(--z-dropdown);
+}
+
+.fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fab-calculator {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.fab-notes {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+.fab:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   TOOL PANELS (Calculator & Notes)
+   ============================================ */
+
+.tool-panel {
+    position: fixed;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    z-index: var(--z-modal);
+    display: none;
+    overflow: hidden;
+}
+
+.tool-panel.active {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tool-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tool-panel-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.panel-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.panel-close:hover {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ============================================
+   CALCULATOR
+   ============================================ */
+
+.calculator-panel {
+    bottom: 90px;
+    right: 20px;
+    width: 280px;
+}
+
+.calculator-body {
+    padding: var(--spacing-md);
+}
+
+.calc-display {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    text-align: right;
+    min-height: 70px;
+}
+
+.calc-expression {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    min-height: 1.2em;
+    word-break: break-all;
+}
+
+.calc-result {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    word-break: break-all;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.calc-btn {
+    padding: 14px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+    font-weight: 500;
+}
+
+.calc-btn:hover {
+    background: var(--bg-primary);
+}
+
+.calc-btn:active {
+    transform: scale(0.95);
+}
+
+.calc-btn.calc-op {
+    background: rgba(102, 126, 234, 0.1);
+    color: var(--primary);
+}
+
+.calc-btn.calc-op:hover {
+    background: rgba(102, 126, 234, 0.2);
+}
+
+.calc-btn.calc-special {
+    background: rgba(255, 152, 0, 0.1);
+    color: #FF9800;
+}
+
+.calc-btn.calc-special:hover {
+    background: rgba(255, 152, 0, 0.2);
+}
+
+.calc-btn.calc-clear {
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--error);
+}
+
+.calc-btn.calc-clear:hover {
+    background: rgba(244, 67, 54, 0.2);
+}
+
+.calc-btn.calc-equals {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.calc-btn.calc-equals:hover {
+    opacity: 0.9;
+}
+
+.calc-btn.calc-backspace {
+    background: rgba(158, 158, 158, 0.1);
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   NOTES PANEL
+   ============================================ */
+
+.notes-panel {
+    bottom: 90px;
+    right: 20px;
+    width: 350px;
+    max-height: 500px;
+}
+
+.notes-body {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
+.notes-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notes-tab {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.notes-tab:hover {
+    background: var(--bg-primary);
+}
+
+.notes-tab.active {
+    background: var(--primary);
+    color: white;
+}
+
+.notes-content {
+    flex: 1;
+    padding: var(--spacing-md);
+    overflow: hidden;
+}
+
+#notes-textarea {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: none;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+#notes-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+#notes-textarea::placeholder {
+    color: var(--text-muted);
+}
+
+.notes-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75rem;
+}
+
+.notes-saved {
+    color: var(--success);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.notes-saved.visible {
+    opacity: 1;
+}
+
+.notes-tip {
+    color: var(--text-muted);
+}
+
+/* Responsive adjustments for tool panels */
+@media (max-width: 480px) {
+    .calculator-panel,
+    .notes-panel {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        bottom: 80px;
+    }
+
+    .fab-container {
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .fab {
+        width: 48px;
+        height: 48px;
+        font-size: 1.3rem;
+    }
+
+    .notes-panel {
+        max-height: 60vh;
+    }
+
+    .notes-body {
+        height: 50vh;
+    }
+}

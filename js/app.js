@@ -1659,6 +1659,236 @@ const App = {
             toast.classList.remove('show');
             setTimeout(() => toast.remove(), 300);
         }, 3000);
+    },
+
+    // ==========================================
+    // MINIRÄKNARE
+    // ==========================================
+
+    calcExpression: '',
+    calcResult: '0',
+    calcWaitingForPower: false,
+
+    /**
+     * Växla miniräknaren synlighet
+     */
+    toggleCalculator() {
+        const panel = document.getElementById('calculator-modal');
+        if (panel) {
+            panel.classList.toggle('active');
+        }
+    },
+
+    /**
+     * Hantera knapptryck på miniräknaren
+     */
+    calcInput(value) {
+        // Om vi väntar på exponent för xʸ
+        if (this.calcWaitingForPower && !isNaN(value)) {
+            this.calcExpression += value;
+            this.calcWaitingForPower = false;
+        } else {
+            this.calcExpression += value;
+        }
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Rensa miniräknaren
+     */
+    calcClear() {
+        this.calcExpression = '';
+        this.calcResult = '0';
+        this.calcWaitingForPower = false;
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Beräkna resultatet
+     */
+    calcEquals() {
+        try {
+            // Ersätt visuella operatorer med JavaScript-operatorer
+            let expr = this.calcExpression
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/')
+                .replace(/−/g, '-')
+                .replace(/π/g, Math.PI.toString())
+                .replace(/\^/g, '**');
+
+            // Säkerhetsvalidering - tillåt bara matematiska uttryck
+            if (!/^[\d\s+\-*/.()π\^e]+$/.test(expr.replace(/\*\*/g, '^'))) {
+                throw new Error('Ogiltigt uttryck');
+            }
+
+            // Beräkna med Function istället för eval för lite bättre säkerhet
+            const result = new Function('return ' + expr)();
+
+            if (isNaN(result) || !isFinite(result)) {
+                this.calcResult = 'Fel';
+            } else {
+                // Avrunda till max 8 decimaler för snyggare visning
+                this.calcResult = parseFloat(result.toFixed(8)).toString();
+            }
+        } catch (e) {
+            this.calcResult = 'Fel';
+        }
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Kvadrera senaste talet (x²)
+     */
+    calcSquare() {
+        // Lägg till ^2 för att kvadrera
+        this.calcExpression += '^2';
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Kvadratrot (√)
+     */
+    calcSqrt() {
+        // Lägg till sqrt-funktion
+        this.calcExpression += 'Math.sqrt(';
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Potens (xʸ)
+     */
+    calcPower() {
+        this.calcExpression += '^';
+        this.calcWaitingForPower = true;
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Ta bort senaste tecknet
+     */
+    calcBackspace() {
+        if (this.calcExpression.length > 0) {
+            // Hantera Math.sqrt( som en enhet
+            if (this.calcExpression.endsWith('Math.sqrt(')) {
+                this.calcExpression = this.calcExpression.slice(0, -10);
+            } else {
+                this.calcExpression = this.calcExpression.slice(0, -1);
+            }
+        }
+        this.updateCalcDisplay();
+    },
+
+    /**
+     * Uppdatera miniräknarens display
+     */
+    updateCalcDisplay() {
+        const exprEl = document.getElementById('calc-expression');
+        const resultEl = document.getElementById('calc-result');
+
+        if (exprEl) {
+            // Visa snyggare version av uttrycket
+            let displayExpr = this.calcExpression
+                .replace(/Math\.sqrt\(/g, '√(')
+                .replace(/\*\*/g, '^');
+            exprEl.textContent = displayExpr || '';
+        }
+        if (resultEl) {
+            resultEl.textContent = this.calcResult;
+        }
+    },
+
+    // ==========================================
+    // ANTECKNINGAR
+    // ==========================================
+
+    currentNoteTopic: 'general',
+    notesSaveTimeout: null,
+
+    /**
+     * Växla anteckningspanelens synlighet
+     */
+    toggleNotes() {
+        const panel = document.getElementById('notes-modal');
+        if (panel) {
+            const isOpening = !panel.classList.contains('active');
+            panel.classList.toggle('active');
+
+            if (isOpening) {
+                this.loadNotes();
+            }
+        }
+    },
+
+    /**
+     * Byt anteckningsflik
+     */
+    switchNotesTab(topic) {
+        // Spara nuvarande anteckningar först
+        this.saveNotes();
+
+        // Uppdatera aktiv flik
+        this.currentNoteTopic = topic;
+        document.querySelectorAll('.notes-tab').forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.topic === topic);
+        });
+
+        // Ladda anteckningar för nytt ämne
+        this.loadNotes();
+    },
+
+    /**
+     * Ladda anteckningar från localStorage
+     */
+    loadNotes() {
+        const textarea = document.getElementById('notes-textarea');
+        if (!textarea) return;
+
+        const notes = Storage.getForProfile('notes', {});
+        textarea.value = notes[this.currentNoteTopic] || '';
+
+        // Uppdatera sparad-indikator
+        this.updateNotesSavedIndicator(true);
+    },
+
+    /**
+     * Spara anteckningar till localStorage
+     */
+    saveNotes() {
+        const textarea = document.getElementById('notes-textarea');
+        if (!textarea) return;
+
+        const notes = Storage.getForProfile('notes', {});
+        notes[this.currentNoteTopic] = textarea.value;
+        Storage.setForProfile('notes', notes);
+
+        this.updateNotesSavedIndicator(true);
+    },
+
+    /**
+     * Hantera input i anteckningsfältet med auto-save
+     */
+    handleNotesInput() {
+        // Visa "sparar..." medan vi väntar
+        this.updateNotesSavedIndicator(false);
+
+        // Debounce - spara efter 500ms utan input
+        if (this.notesSaveTimeout) {
+            clearTimeout(this.notesSaveTimeout);
+        }
+        this.notesSaveTimeout = setTimeout(() => {
+            this.saveNotes();
+        }, 500);
+    },
+
+    /**
+     * Uppdatera sparad-indikator
+     */
+    updateNotesSavedIndicator(saved) {
+        const indicator = document.getElementById('notes-saved-indicator');
+        if (indicator) {
+            indicator.textContent = saved ? '✓ Sparad' : '○ Sparar...';
+            indicator.classList.toggle('saving', !saved);
+        }
     }
 };
 

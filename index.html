@@ -578,6 +578,87 @@
         </div>
     </div>
 
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+        <button class="fab fab-notes" onclick="app.toggleNotes()" title="Anteckningar">
+            📝
+        </button>
+        <button class="fab fab-calculator" onclick="app.toggleCalculator()" title="Miniräknare">
+            🧮
+        </button>
+    </div>
+
+    <!-- Calculator Modal -->
+    <div id="calculator-modal" class="tool-panel calculator-panel">
+        <div class="tool-panel-header">
+            <h3>🧮 Miniräknare</h3>
+            <button class="panel-close" onclick="app.toggleCalculator()">&times;</button>
+        </div>
+        <div class="calculator-body">
+            <div class="calc-display">
+                <div class="calc-expression" id="calc-expression"></div>
+                <div class="calc-result" id="calc-result">0</div>
+            </div>
+            <div class="calc-buttons">
+                <button class="calc-btn calc-clear" onclick="app.calcClear()">C</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput('(')">(</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput(')')">)</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput('/')">÷</button>
+
+                <button class="calc-btn" onclick="app.calcInput('7')">7</button>
+                <button class="calc-btn" onclick="app.calcInput('8')">8</button>
+                <button class="calc-btn" onclick="app.calcInput('9')">9</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput('*')">×</button>
+
+                <button class="calc-btn" onclick="app.calcInput('4')">4</button>
+                <button class="calc-btn" onclick="app.calcInput('5')">5</button>
+                <button class="calc-btn" onclick="app.calcInput('6')">6</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput('-')">−</button>
+
+                <button class="calc-btn" onclick="app.calcInput('1')">1</button>
+                <button class="calc-btn" onclick="app.calcInput('2')">2</button>
+                <button class="calc-btn" onclick="app.calcInput('3')">3</button>
+                <button class="calc-btn calc-op" onclick="app.calcInput('+')">+</button>
+
+                <button class="calc-btn" onclick="app.calcInput('0')">0</button>
+                <button class="calc-btn" onclick="app.calcInput('.')">.</button>
+                <button class="calc-btn calc-special" onclick="app.calcInput('π')">π</button>
+                <button class="calc-btn calc-equals" onclick="app.calcEquals()">=</button>
+
+                <button class="calc-btn calc-special" onclick="app.calcSquare()">x²</button>
+                <button class="calc-btn calc-special" onclick="app.calcSqrt()">√</button>
+                <button class="calc-btn calc-special" onclick="app.calcPower()">xʸ</button>
+                <button class="calc-btn calc-backspace" onclick="app.calcBackspace()">⌫</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes Panel -->
+    <div id="notes-modal" class="tool-panel notes-panel">
+        <div class="tool-panel-header">
+            <h3>📝 Mina Anteckningar</h3>
+            <button class="panel-close" onclick="app.toggleNotes()">&times;</button>
+        </div>
+        <div class="notes-body">
+            <div class="notes-tabs">
+                <button class="notes-tab active" data-topic="general" onclick="app.switchNotesTab('general')">📋 Allmänt</button>
+                <button class="notes-tab" data-topic="3.1" onclick="app.switchNotesTab('3.1')">📐 3.1</button>
+                <button class="notes-tab" data-topic="3.2" onclick="app.switchNotesTab('3.2')">⭕ 3.2</button>
+                <button class="notes-tab" data-topic="3.3" onclick="app.switchNotesTab('3.3')">📦 3.3</button>
+                <button class="notes-tab" data-topic="3.4" onclick="app.switchNotesTab('3.4')">🧪 3.4</button>
+                <button class="notes-tab" data-topic="3.5" onclick="app.switchNotesTab('3.5')">🔺 3.5</button>
+                <button class="notes-tab" data-topic="3.6" onclick="app.switchNotesTab('3.6')">🔵 3.6</button>
+            </div>
+            <div class="notes-content">
+                <textarea id="notes-textarea" placeholder="Skriv dina anteckningar här..." oninput="app.handleNotesInput()"></textarea>
+            </div>
+            <div class="notes-footer">
+                <span class="notes-saved" id="notes-saved-indicator">✓ Sparad</span>
+                <span class="notes-tip">Anteckningar sparas automatiskt</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script type="module" src="js/app.js"></script>
 </body>
