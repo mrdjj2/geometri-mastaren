@@ -1422,99 +1422,82 @@ const App = {
      * Rendera inställningar
      */
     renderSettings() {
-        const container = document.getElementById('settings-content');
-        if (!container) return;
-
         const profile = Storage.getProfile();
 
-        container.innerHTML = `
-            <h2>⚙️ Inställningar</h2>
+        // Sätt värden på statiska fält
+        const nameInput = document.getElementById('setting-name');
+        if (nameInput) {
+            nameInput.value = profile.name || '';
+            // Ta bort gamla event listeners genom att klona elementet
+            const newNameInput = nameInput.cloneNode(true);
+            nameInput.parentNode.replaceChild(newNameInput, nameInput);
 
-            <div class="settings-section">
-                <h3>Profil</h3>
-                <div class="setting-item">
-                    <label>Namn:</label>
-                    <input type="text" id="setting-name" value="${profile.name || ''}">
-                </div>
-            </div>
+            // Lägg till ny event listener
+            newNameInput.addEventListener('change', (e) => {
+                const newName = e.target.value.trim() || 'Elev';
+                const currentProfile = Storage.getProfile();
+                currentProfile.name = newName;
+                Storage.saveProfile(currentProfile);
 
-            <div class="settings-section">
-                <h3>Utseende</h3>
-                <div class="setting-item">
-                    <label>Mörkt läge:</label>
-                    <input type="checkbox" id="setting-darkmode" ${profile.settings?.darkMode ? 'checked' : ''}>
-                </div>
-            </div>
+                // Uppdatera även profillistan
+                const profiles = Storage.getAllProfiles();
+                const currentProfileId = Storage.getCurrentProfileId();
+                const profileIndex = profiles.findIndex(p => p.id === currentProfileId);
+                if (profileIndex !== -1) {
+                    profiles[profileIndex].name = newName;
+                    Storage.set('profiles', profiles);
+                }
 
-            <div class="settings-section">
-                <h3>Ljud</h3>
-                <div class="setting-item">
-                    <label>Ljudeffekter:</label>
-                    <input type="checkbox" id="setting-sound" ${profile.settings?.soundEnabled !== false ? 'checked' : ''}>
-                </div>
-            </div>
+                // Uppdatera välkomstnamn på dashboarden
+                const welcomeName = document.getElementById('welcome-name');
+                if (welcomeName) {
+                    welcomeName.textContent = newName;
+                }
 
-            <div class="settings-section">
-                <h3>Data</h3>
-                <div class="settings-buttons">
-                    <button class="btn btn-secondary" id="export-btn">📤 Exportera data</button>
-                    <button class="btn btn-secondary" id="import-btn">📥 Importera data</button>
-                    <button class="btn btn-danger" id="reset-btn">🗑️ Återställ all data</button>
-                </div>
-            </div>
-        `;
+                // Uppdatera sidomeny
+                const userNameEl = document.getElementById('user-name');
+                if (userNameEl) {
+                    userNameEl.textContent = newName;
+                }
 
-        // Händelsehanterare
-        container.querySelector('#setting-name').addEventListener('change', (e) => {
-            const newName = e.target.value.trim() || 'Elev';
-            profile.name = newName;
-            Storage.saveProfile(profile);
+                this.updateHeader();
+            });
+        }
 
-            // Uppdatera även profillistan
-            const profiles = Storage.getAllProfiles();
-            const currentProfileId = Storage.getCurrentProfileId();
-            const profileIndex = profiles.findIndex(p => p.id === currentProfileId);
-            if (profileIndex !== -1) {
-                profiles[profileIndex].name = newName;
-                Storage.set('profiles', profiles);
-            }
+        // Tema-hantering (använd statisk select om den finns)
+        const themeSelect = document.getElementById('setting-theme');
+        if (themeSelect) {
+            themeSelect.value = profile.settings?.darkMode ? 'dark' : 'light';
+            const newThemeSelect = themeSelect.cloneNode(true);
+            themeSelect.parentNode.replaceChild(newThemeSelect, themeSelect);
 
-            // Uppdatera välkomstnamn på dashboarden
-            const welcomeName = document.getElementById('welcome-name');
-            if (welcomeName) {
-                welcomeName.textContent = newName;
-            }
+            newThemeSelect.addEventListener('change', (e) => {
+                const currentProfile = Storage.getProfile();
+                currentProfile.settings.darkMode = e.target.value === 'dark';
+                Storage.saveProfile(currentProfile);
+                document.body.classList.toggle('dark-theme', e.target.value === 'dark');
+            });
+        }
 
-            this.updateHeader();
-        });
+        // Ljud-hantering
+        const soundCheckbox = document.getElementById('setting-sounds');
+        if (soundCheckbox) {
+            soundCheckbox.checked = profile.settings?.soundEnabled !== false;
+            const newSoundCheckbox = soundCheckbox.cloneNode(true);
+            soundCheckbox.parentNode.replaceChild(newSoundCheckbox, soundCheckbox);
 
-        container.querySelector('#setting-darkmode').addEventListener('change', (e) => {
-            profile.settings.darkMode = e.target.checked;
-            Storage.saveProfile(profile);
-            document.body.classList.toggle('dark-theme', e.target.checked);
-        });
+            newSoundCheckbox.addEventListener('change', (e) => {
+                const currentProfile = Storage.getProfile();
+                currentProfile.settings.soundEnabled = e.target.checked;
+                Storage.saveProfile(currentProfile);
+            });
+        }
 
-        container.querySelector('#setting-sound').addEventListener('change', (e) => {
-            profile.settings.soundEnabled = e.target.checked;
-            Storage.saveProfile(profile);
-        });
-
-        container.querySelector('#export-btn').addEventListener('click', () => {
-            const data = Storage.exportData();
-            const blob = new Blob([data], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'geometri-spel-data.json';
-            a.click();
-        });
-
-        container.querySelector('#reset-btn').addEventListener('click', () => {
-            if (confirm('Är du säker? All din progress kommer att raderas!')) {
-                Storage.clear();
-                location.reload();
-            }
-        });
+        // Animationer-toggle
+        const animationsCheckbox = document.getElementById('setting-animations');
+        if (animationsCheckbox) {
+            // Inget att spara för animationer just nu
+        }
     },
 
     /**
