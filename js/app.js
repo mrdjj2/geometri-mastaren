@@ -1466,8 +1466,25 @@ const App = {
 
         // Händelsehanterare
         container.querySelector('#setting-name').addEventListener('change', (e) => {
-            profile.name = e.target.value;
+            const newName = e.target.value.trim() || 'Elev';
+            profile.name = newName;
             Storage.saveProfile(profile);
+
+            // Uppdatera även profillistan
+            const profiles = Storage.getAllProfiles();
+            const currentProfileId = Storage.getCurrentProfileId();
+            const profileIndex = profiles.findIndex(p => p.id === currentProfileId);
+            if (profileIndex !== -1) {
+                profiles[profileIndex].name = newName;
+                Storage.set('profiles', profiles);
+            }
+
+            // Uppdatera välkomstnamn på dashboarden
+            const welcomeName = document.getElementById('welcome-name');
+            if (welcomeName) {
+                welcomeName.textContent = newName;
+            }
+
             this.updateHeader();
         });
 
