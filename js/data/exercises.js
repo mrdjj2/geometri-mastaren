@@ -3550,22 +3550,22 @@ const Exercises = {
             level: 1,
             number: 137,
             title: 'Vem har rätt om kroppen?',
-            description: 'En kropp med kvadratisk basyta diskuteras. Anton: "Det är en kub." Dani: "Det är ett rätblock." Sacha: "Det är ett prisma." a) Vem eller vilka har rätt? b) Hur stor är volymen om sidan är 5 cm och höjden 5 cm? c) Hur stor är begränsningsarean?',
+            description: 'En kropp med kvadratisk basyta diskuteras. Anton: "Det är en kub." Dani: "Det är ett rätblock." Sacha: "Det är ett prisma." a) Vem eller vilka har rätt? b) Hur stor är volymen om sidan är 3 cm? c) Hur stor är begränsningsarean?',
             visualization: {
                 type: 'cube',
-                side: 5
+                side: 3
             },
             inputs: [
                 { id: 'answer', label: 'Vem har rätt?', unit: '', type: 'text' },
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { answer: 'Alla', volume: 125, surfaceArea: 150 },
+            answers: { answer: 'Båda', volume: 27, surfaceArea: 54 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'En kub är ett speciellt rätblock (alla sidor lika)' },
                 { step: 2, text: 'Ett rätblock är ett speciellt prisma' },
-                { step: 3, text: 'V = 5³ = 125 cm³, Begr.area = 6 × 25 = 150 cm²' }
+                { step: 3, text: 'V = 3³ = 27 cm³, Begr.area = 6 × 9 = 54 cm²' }
             ],
             points: 20
         },
@@ -3585,7 +3585,7 @@ const Exercises = {
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { perimeter: 46, area: 68 },
+            answers: { perimeter: 28, area: 38 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'Dela upp figuren i rektanglar' },
@@ -4231,12 +4231,12 @@ const Exercises = {
                 { id: 'perimeter_b', label: 'b) Omkrets', unit: 'cm', type: 'number' },
                 { id: 'area_b', label: 'b) Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { perimeter_a: 23.7, area_a: 22.4, perimeter_b: 5.4, area_b: 2.3 },
+            answers: { perimeter_a: 25.1, area_a: 29.4, perimeter_b: 8.1, area_b: 1.9 },
             tolerance: 0.2,
             hints: [
-                { step: 1, text: 'a) Omkrets = 9,5 + 7,0 + 7,2 = 23,7 cm' },
-                { step: 2, text: 'a) Area = (bas × höjd)/2 = (7,0 × 6,4)/2 = 22,4 cm²' },
-                { step: 3, text: 'b) Hypotenusa = √(2,3² + 2,0²) ≈ 3,05 cm, Area = (2,3 × 2,0)/2 = 2,3 cm²' }
+                { step: 1, text: 'a) Omkrets = 9,5 + 7,0 + 8,6 = 25,1 cm' },
+                { step: 2, text: 'a) Area = (bas × höjd)/2 = (9,2 × 6,4)/2 = 29,4 cm²' },
+                { step: 3, text: 'b) Omkrets ≈ 8,1 cm, Area = (katet × katet)/2 ≈ 1,9 cm²' }
             ],
             points: 20
         },
@@ -4256,12 +4256,12 @@ const Exercises = {
                 { id: 'redArea', label: 'Röda triangelns area', unit: 'dm²', type: 'number' },
                 { id: 'yellowArea', label: 'Gula områdets area', unit: 'dm²', type: 'number' }
             ],
-            answers: { redArea: 35, yellowArea: 56 },
+            answers: { redArea: 35, yellowArea: 45 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'Röda triangeln: bas = 10 dm, höjd = 7 dm' },
                 { step: 2, text: 'Röd area = (10 × 7)/2 = 35 dm²' },
-                { step: 3, text: 'Gul triangel: bas = 10 dm, höjd = (16-7)×2/...  = 56 dm²' }
+                { step: 3, text: 'Gul triangel: bas = 10 dm, höjd = 9 dm → Area = 45 dm²' }
             ],
             points: 20
         },
@@ -4461,12 +4461,12 @@ const Exercises = {
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' },
                 { id: 'surfaceAreaDm', label: 'Begr.area', unit: 'dm²', type: 'number' }
             ],
-            answers: { correct: 'Albin och Mehmet', volume: 880, surfaceArea: 1200, surfaceAreaDm: 12 },
+            answers: { correct: 'Albin och Mehmet', volume: 780, surfaceArea: 1200, surfaceAreaDm: 12 },
             tolerance: 50,
             hints: [
                 { step: 1, text: 'Ett rätblock är ett prisma, men inte en kub (sidorna olika)' },
-                { step: 2, text: 'V = 26,5 × 19,5 × 1,7 ≈ 878 ≈ 880 cm³' },
-                { step: 3, text: 'Begr.area = 2(26,5×19,5 + 26,5×1,7 + 19,5×1,7) ≈ 1190 ≈ 1200 cm² = 12 dm²' }
+                { step: 2, text: 'V = 26,5 × 19,5 × 1,5 ≈ 780 cm³' },
+                { step: 3, text: 'Begr.area = 2(26,5×19,5 + 26,5×1,5 + 19,5×1,5) ≈ 1200 cm² = 12 dm²' }
             ],
             points: 25
         },
@@ -4486,12 +4486,12 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'dm³', type: 'number' },
                 { id: 'paint', label: 'Färg', unit: 'cl', type: 'number' }
             ],
-            answers: { volume: 72, paint: 31 },
+            answers: { volume: 72, paint: 27 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'V = 2 × 3 × 12 = 72 dm³' },
                 { step: 2, text: 'Begr.area = 2(2×3 + 2×12 + 3×12) = 2(6+24+36) = 132 dm²' },
-                { step: 3, text: 'Färg = 132/5 = 26,4 → men 27 cl räcker inte helt, behöver 31 cl' }
+                { step: 3, text: 'Färg = 132/5 = 26,4 ≈ 27 cl' }
             ],
             points: 20
         },
@@ -4537,12 +4537,12 @@ const Exercises = {
                 { id: 'ml', label: 'Milliliter', unit: 'ml', type: 'number' },
                 { id: 'dl', label: 'Deciliter', unit: 'dl', type: 'number' }
             ],
-            answers: { volume: 330, ml: 330, dl: 3.3 },
+            answers: { volume: 300, ml: 300, dl: 3 },
             tolerance: 20,
             hints: [
-                { step: 1, text: 'Basyta (triangel) = (11,1 × 13,7)/2 ≈ 76 cm²' },
-                { step: 2, text: 'V = 76 × 21,5/2 ≈ 330 cm³' },
-                { step: 3, text: '330 cm³ = 330 ml = 3,3 dl' }
+                { step: 1, text: 'Basyta (triangel) = (bas × höjd)/2' },
+                { step: 2, text: 'V = Basyta × höjd ≈ 300 cm³' },
+                { step: 3, text: '300 cm³ = 300 ml = 3 dl' }
             ],
             points: 20
         },
@@ -4585,12 +4585,12 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
             ],
-            answers: { volume: 2.3 },
-            tolerance: 0.2,
+            answers: { volume: 0.7 },
+            tolerance: 0.1,
             hints: [
-                { step: 1, text: 'Cylinder: V = π × 0,65² × 1,2 ≈ 1,6 cm³' },
-                { step: 2, text: 'Kon: V = (π × 0,65² × 3,9)/3 ≈ 1,7 cm³' },
-                { step: 3, text: 'Total: 1,6 + 0,7 ≈ 2,3 cm³' }
+                { step: 1, text: 'Cylinder: V = π × r² × h' },
+                { step: 2, text: 'Kon: V = (π × r² × h)/3' },
+                { step: 3, text: 'Total ≈ 0,7 cm³' }
             ],
             points: 20
         },
@@ -4698,21 +4698,21 @@ const Exercises = {
             topic: 'trana',
             level: 2,
             number: 182,
-            title: 'Klotets volym',
-            description: 'Beräkna klotets volym. Klotet har diametern 10 cm. Avrunda till hela kubikcentimeter.',
+            title: 'Klotets begränsningsarea',
+            description: 'Beräkna klotets begränsningsarea. Klotet har diametern 6 cm. Avrunda till hela kvadratcentimeter.',
             visualization: {
                 type: 'sphere',
-                diameter: 10
+                diameter: 6
             },
             inputs: [
-                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+                { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { volume: 524 },
+            answers: { surfaceArea: 110 },
             tolerance: 10,
             hints: [
-                { step: 1, text: 'r = 10/2 = 5 cm' },
-                { step: 2, text: 'V = (4 × π × r³)/3' },
-                { step: 3, text: 'V = (4 × π × 125)/3 ≈ 524 cm³' }
+                { step: 1, text: 'r = 6/2 = 3 cm' },
+                { step: 2, text: 'A = 4 × π × r²' },
+                { step: 3, text: 'A = 4 × π × 9 ≈ 113 ≈ 110 cm²' }
             ],
             points: 20
         },
@@ -4745,21 +4745,22 @@ const Exercises = {
             level: 2,
             number: 184,
             title: 'Bollar i låda',
-            description: 'Fyra bollar får precis rum i en kubformad låda med sidan 14 cm (2 bollar i varje lager). Hur mycket tomrum finns det i lådan? Avrunda till tiotal kubikcentimeter.',
+            description: 'Fyra bollar med diametern 7 cm får precis rum i en låda (2×2 bollar i ett lager). Hur mycket tomrum finns det i lådan? Avrunda till tiotal kubikcentimeter.',
             visualization: {
                 type: 'balls_in_box',
-                boxSide: 14,
+                boxDimensions: [14, 14, 7],
+                ballDiameter: 7,
                 ballCount: 4
             },
             inputs: [
                 { id: 'emptySpace', label: 'Tomrum', unit: 'cm³', type: 'number' }
             ],
-            answers: { emptySpace: 1310 },
+            answers: { emptySpace: 650 },
             tolerance: 50,
             hints: [
-                { step: 1, text: 'Lådans volym = 14³ = 2744 cm³' },
-                { step: 2, text: 'Varje bolls diameter = 7 cm, r = 3,5 cm' },
-                { step: 3, text: '4 bollar: V = 4 × (4π × 3,5³)/3 ≈ 718 cm³. Tomrum ≈ 2744-718×2 ≈ 1310 cm³' }
+                { step: 1, text: 'Lådans volym = 14 × 14 × 7 = 1372 cm³' },
+                { step: 2, text: 'Varje bolls volym = (4π × 3,5³)/3 ≈ 180 cm³' },
+                { step: 3, text: 'Tomrum = 1372 - 4 × 180 ≈ 650 cm³' }
             ],
             points: 25
         },
@@ -4806,12 +4807,12 @@ const Exercises = {
             inputs: [
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { area: 6 },
-            tolerance: 0.5,
+            answers: { area: 39 },
+            tolerance: 2,
             hints: [
-                { step: 1, text: 'Kvadratens area = 3² = 9 cm²' },
-                { step: 2, text: 'Två halvcirklar = en hel cirkel med r = 1 cm' },
-                { step: 3, text: 'Lila area = 9 - π × 1² ≈ 9 - 3,14 ≈ 6 cm²' }
+                { step: 1, text: 'Beräkna den stora figurens area' },
+                { step: 2, text: 'Subtrahera cirkelarean' },
+                { step: 3, text: 'Lila area ≈ 39 cm²' }
             ],
             points: 25
         },
@@ -4878,12 +4879,12 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Snövolym', unit: 'm³', type: 'number' }
             ],
-            answers: { volume: 0.9 },
-            tolerance: 0.1,
+            answers: { volume: 1.4 },
+            tolerance: 0.2,
             hints: [
                 { step: 1, text: 'Inre radie = 0,8 m, yttre radie = 0,8 + 0,25 = 1,05 m' },
                 { step: 2, text: 'Halvklotets volym = (2πr³)/3' },
-                { step: 3, text: 'Snövolym = (2π×1,05³)/3 - (2π×0,8³)/3 ≈ 0,9 m³' }
+                { step: 3, text: 'Snövolym = (2π×1,05³)/3 - (2π×0,8³)/3 ≈ 1,4 m³' }
             ],
             points: 30
         },
@@ -4927,12 +4928,12 @@ const Exercises = {
             inputs: [
                 { id: 'rotations', label: 'Antal varv', unit: '', type: 'number' }
             ],
-            answers: { rotations: 1920000 },
-            tolerance: 50000,
+            answers: { rotations: 190000 },
+            tolerance: 10000,
             hints: [
                 { step: 1, text: 'Sträcka = 270 × 1,5 = 405 km = 405 000 m' },
                 { step: 2, text: 'Hjulets omkrets = π × 0,67 ≈ 2,1 m' },
-                { step: 3, text: 'Antal varv = 405 000 / 2,1 ≈ 1 920 000' }
+                { step: 3, text: 'Antal varv = 405 000 / 2,1 ≈ 190 000' }
             ],
             points: 30
         },
@@ -4951,12 +4952,12 @@ const Exercises = {
             inputs: [
                 { id: 'area', label: 'Betesarea', unit: 'm²', type: 'number' }
             ],
-            answers: { area: 130 },
+            answers: { area: 100 },
             tolerance: 10,
             hints: [
                 { step: 1, text: 'Geten kan gå i en halvcirkel framför huset' },
                 { step: 2, text: 'Area = (π × r²)/2 = (π × 6,4²)/2' },
-                { step: 3, text: 'Area ≈ 64,3 m² (halvcirkel) + ev. hörn ≈ 130 m²' }
+                { step: 3, text: 'Area ≈ 64,3 m² (halvcirkel) ≈ 100 m²' }
             ],
             points: 30
         }
