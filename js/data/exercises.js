@@ -827,21 +827,21 @@ const Exercises = {
             level: 1,
             number: 32,
             title: 'Kiwiskivans area',
-            description: 'Hur stor area har kiwiskivan? Diametern är 4,8 cm. Avrunda till hela kvadratcentimeter.',
+            description: 'Hur stor area har kiwiskivan? Diametern är 3,4 cm. Avrunda till hela kvadratcentimeter.',
             visualization: {
                 type: 'circle',
-                diameter: 4.8,
+                diameter: 3.4,
                 fillColor: '#8BC34A'
             },
             inputs: [
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { area: 18 },
+            answers: { area: 9 },
             tolerance: 1,
             hints: [
-                { step: 1, text: 'Radie r = d/2 = 4,8/2 = 2,4 cm' },
+                { step: 1, text: 'Radie r = d/2 = 3,4/2 = 1,7 cm' },
                 { step: 2, text: 'Area A = π·r²' },
-                { step: 3, text: 'A = π × 2,4² = 5,76π ≈ 18 cm²' }
+                { step: 3, text: 'A = π × 1,7² ≈ 9 cm²' }
             ],
             points: 15
         },
@@ -898,23 +898,23 @@ const Exercises = {
             topic: '3.2',
             level: 1,
             number: 35,
-            title: 'Cirkeltabell',
-            description: 'Fyll i tabellen. Cirkeln har diametern 7 cm. a) Vad är radien? b) Vad är arean? Avrunda till tiondel.',
+            title: 'Notre Dames rosettfönster',
+            description: 'Hur stor area har det västliga rosettfönstret i Notre Dame? Diametern är 10 m. Avrunda till hela kvadratmeter.',
             visualization: {
                 type: 'circle',
-                diameter: 7,
+                diameter: 10,
+                unit: 'm',
                 showMeasurements: true
             },
             inputs: [
-                { id: 'radius', label: 'Radie', unit: 'cm', type: 'number' },
-                { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
+                { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
             ],
-            answers: { radius: 3.5, area: 1.5 },
-            tolerance: 0.2,
+            answers: { area: 79 },
+            tolerance: 1,
             hints: [
-                { step: 1, text: 'Radie = diameter / 2' },
-                { step: 2, text: 'r = 7 / 2 = 3,5 cm' },
-                { step: 3, text: 'Area = π × r² (men facit säger 1,5 cm²)' }
+                { step: 1, text: 'Radie = diameter / 2 = 10/2 = 5 m' },
+                { step: 2, text: 'Area A = π × r²' },
+                { step: 3, text: 'A = π × 5² = π × 25 ≈ 78,5 ≈ 79 m²' }
             ],
             points: 15
         },
@@ -1124,25 +1124,25 @@ const Exercises = {
             topic: '3.2',
             level: 3,
             number: 44,
-            title: 'Tevasalongens mått',
-            description: 'Tevasalongen är cirkelformad. På kartan är diametern 3 cm. Skala 1:1000. Beräkna den verkliga omkretsen och arean.',
+            title: 'Ovalformad tevasalong',
+            description: 'Tevasalongen är ovalformad (kapselformad med raka långsidor och halvcirklar på kortsidorna). Den raka delen är 31 m lång och bredden är 25 m. Beräkna omkrets och area. Avrunda till hela tal.',
             visualization: {
-                type: 'circle',
-                mapDiameter: 3,
-                scale: '1:1000',
-                unit: 'cm'
+                type: 'oval',
+                length: 31,
+                width: 25,
+                unit: 'm',
+                showMeasurements: true
             },
             inputs: [
-                { id: 'realDiameter', label: 'Verklig diameter', unit: 'm', type: 'number' },
                 { id: 'circumference', label: 'Omkrets', unit: 'm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
             ],
-            answers: { realDiameter: 30, circumference: 94, area: 20 },
-            tolerance: 10,
+            answers: { circumference: 140, area: 1260 },
+            tolerance: 5,
             hints: [
-                { step: 1, text: 'Skala 1:1000 betyder 1 cm = 10 m' },
-                { step: 2, text: 'Verklig diameter = 3 × 10 = 30 m' },
-                { step: 3, text: 'Omkrets = π × 30, Area = π × 15²' }
+                { step: 1, text: 'Omkrets = 2 × rak sida + π × bredd (halvcirklarna bildar en hel cirkel)' },
+                { step: 2, text: 'O = 2 × 31 + π × 25 = 62 + 78,5 ≈ 140 m' },
+                { step: 3, text: 'Area = rektangel + cirkel: A = 31 × 25 + π × 12,5² = 775 + 491 ≈ 1266 ≈ 1260 m²' }
             ],
             points: 25
         },
@@ -3571,15 +3571,16 @@ const Exercises = {
         },
         {
             id: 'mix.138',
-            topic: '3.1',
+            topic: 'mix',
             level: 1,
             number: 138,
             title: 'Sammansatt figur',
-            description: 'Beräkna figurens omkrets och area.',
+            description: 'Beräkna figurens omkrets och area. Figuren är sammansatt av rektanglar med måtten: höjd 8 cm, bredd överst 5 cm, bredd nederst 11 cm, och mellansteget är 4 cm.',
             visualization: {
                 type: 'composite',
                 shape: 'L-shape',
-                measurements: [8, 5, 4, 11]
+                measurements: [8, 5, 4, 11],
+                showMeasurements: true
             },
             inputs: [
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
