@@ -3571,7 +3571,7 @@ const Exercises = {
         },
         {
             id: 'mix.138',
-            topic: 'mix',
+            topic: '3.1',
             level: 1,
             number: 138,
             title: 'Sammansatt figur',
