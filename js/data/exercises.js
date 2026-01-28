@@ -67,11 +67,12 @@ const Exercises = {
             level: 1,
             number: 1,
             title: 'Triangelns omkrets och area',
-            description: 'Triangeln har sidorna 5 cm, 4 cm och 3 cm. Höjden är 3,2 cm. Beräkna omkrets och area.',
+            description: 'En rätvinklig triangel har kateterna 3 cm och 4 cm. Hypotenusan är 5 cm. Beräkna omkrets och area.',
             visualization: {
                 type: 'triangle',
                 sides: [5, 4, 3],
-                height: 3.2,
+                height: 3,
+                base: 4,
                 showMeasurements: true
             },
             inputs: [
@@ -81,9 +82,9 @@ const Exercises = {
             answers: { perimeter: 12, area: 6 },
             tolerance: 0.5,
             hints: [
-                { step: 1, text: 'Omkretsen är summan av alla sidor: a + b + c' },
-                { step: 2, text: 'Arean av en triangel beräknas med formeln A = (b·h)/2' },
-                { step: 3, text: 'Om sidorna är 5, 4 och 3 cm, vad blir omkretsen?' }
+                { step: 1, text: 'Omkretsen är summan av alla sidor: 3 + 4 + 5' },
+                { step: 2, text: 'Arean av en rätvinklig triangel: A = (katet₁ · katet₂)/2' },
+                { step: 3, text: 'Arean blir (3 · 4)/2 = ?' }
             ],
             points: 15
         },
@@ -92,23 +93,24 @@ const Exercises = {
             topic: '3.1',
             level: 1,
             number: 2,
-            title: 'Kvadrat med given area',
-            description: 'En kvadrat har arean 16 cm². Rita en rektangel med samma omkrets som kvadraten. Hur stor area har din rektangel?',
+            title: 'Rektangel med samma omkrets',
+            description: 'En kvadrat har arean 16 cm². En rektangel har samma omkrets som kvadraten. Om rektangelns ena sida är 6 cm, hur lång är den andra sidan? Hur stor är rektangelns area?',
             visualization: {
-                type: 'square',
-                side: 4,
-                showArea: true
+                type: 'rectangle',
+                length: 6,
+                width: 2,
+                showMeasurements: true
             },
             inputs: [
-                { id: 'side', label: 'Kvadratens sida', unit: 'cm', type: 'number' },
-                { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' }
+                { id: 'width', label: 'Andra sidan', unit: 'cm', type: 'number' },
+                { id: 'area', label: 'Rektangelns area', unit: 'cm²', type: 'number' }
             ],
-            answers: { side: 4, perimeter: 16 },
+            answers: { width: 2, area: 12 },
             tolerance: 0.1,
             hints: [
-                { step: 1, text: 'Om arean är 16 cm², vad är sidan? Tänk: s² = 16' },
-                { step: 2, text: 'Sidan är √16 = 4 cm' },
-                { step: 3, text: 'Omkretsen av en kvadrat är 4·s' }
+                { step: 1, text: 'Kvadratens sida: √16 = 4 cm. Omkrets: 4·4 = 16 cm' },
+                { step: 2, text: 'Rektangelns omkrets: 2·(6 + x) = 16, alltså 6 + x = 8' },
+                { step: 3, text: 'Andra sidan är 2 cm. Arean = 6 · 2 = ?' }
             ],
             points: 15
         },
@@ -127,12 +129,12 @@ const Exercises = {
             inputs: [
                 { id: 'diameter', label: 'Diameter', unit: 'm', type: 'number' }
             ],
-            answers: { diameter: 0.95 },
+            answers: { diameter: 1 },
             tolerance: 0.1,
             hints: [
-                { step: 1, text: 'Omkretsen O = π·d, så d = O/π' },
-                { step: 2, text: 'π ≈ 3,14, alltså d ≈ 3/3,14' },
-                { step: 3, text: 'Mehmet använder att π ≈ 3, så d ≈ O/3 = 1 m' }
+                { step: 1, text: 'Mehmet vet att omkretsen ≈ 3 × diametern' },
+                { step: 2, text: 'Alltså diameter ≈ omkrets / 3' },
+                { step: 3, text: 'd ≈ 3 / 3 = 1 m' }
             ],
             points: 10
         },
@@ -168,24 +170,24 @@ const Exercises = {
             level: 1,
             number: 5,
             title: 'Parallellogram',
-            description: 'Vilken sorts figur är det här? Beräkna figurens omkrets och area.',
+            description: 'Vilken sorts figur är det här? Beräkna figurens omkrets och area. Basen är 5 cm, sidan är 3 cm och höjden är 2,5 cm.',
             visualization: {
                 type: 'parallelogram',
                 base: 5,
-                side: 2.5,
-                height: 2,
+                side: 3,
+                height: 2.5,
                 showMeasurements: true
             },
             inputs: [
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { perimeter: 15, area: 10 },
+            answers: { perimeter: 16, area: 12.5 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: 'En parallellogram har två par parallella sidor' },
-                { step: 2, text: 'Omkrets = 2·(bas + sida)' },
-                { step: 3, text: 'Area = bas · höjd' }
+                { step: 2, text: 'Omkrets = 2·(5 + 3) = 16 cm' },
+                { step: 3, text: 'Area = bas · höjd = 5 · 2,5 = 12,5 cm²' }
             ],
             points: 15
         },
@@ -222,22 +224,22 @@ const Exercises = {
             level: 1,
             number: 7,
             title: 'Sammansatt figur',
-            description: 'Den sammansatta figuren (L-form) har måtten: yttre bredd 6 cm, yttre höjd 4 cm, urtagets bredd 3 cm och urtagets höjd 2 cm. Beräkna figurens omkrets och area.',
+            description: 'En sammansatt figur består av en rektangel och en triangel. Rektangeln är 4 cm × 2 cm. Triangeln har basen 2 cm och höjden 3 cm. Beräkna figurens omkrets och area.',
             visualization: {
                 type: 'composite',
-                shape: 'L-shape',
-                measurements: [6, 2, 3, 4]
+                shape: 'rectangle-triangle',
+                measurements: [4, 2, 3]
             },
             inputs: [
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { perimeter: 20, area: 18 },
+            answers: { perimeter: 13, area: 11 },
             tolerance: 1,
             hints: [
-                { step: 1, text: 'Dela upp figuren i två rektanglar' },
-                { step: 2, text: 'Beräkna arean för varje del och addera' },
-                { step: 3, text: 'Omkretsen är summan av alla yttre sidor' }
+                { step: 1, text: 'Rektangelns area: 4 × 2 = 8 cm²' },
+                { step: 2, text: 'Triangelns area: (2 × 3)/2 = 3 cm²' },
+                { step: 3, text: 'Total area: 8 + 3 = 11 cm²' }
             ],
             points: 15
         },
@@ -325,18 +327,18 @@ const Exercises = {
             level: 2,
             number: 11,
             title: 'Klassrummets bredd',
-            description: 'Under en matematiklektion mäter eleverna klassrummets längd och bredd. De räknar ut att klassrummets area är 28,5 m². Hur brett är klassrummet om det är 9 m långt?',
+            description: 'Under en matematiklektion mäter eleverna klassrummets längd och bredd. De räknar ut att klassrummets area är 58,5 m². Hur brett är klassrummet om det är 9 m långt?',
             visualization: {
                 type: 'rectangle',
                 length: 9,
-                area: 28.5,
+                area: 58.5,
                 showMeasurements: true
             },
             inputs: [
                 { id: 'width', label: 'Bredd', unit: 'm', type: 'number' }
             ],
-            answers: { width: 3.17 },
-            tolerance: 0.05,
+            answers: { width: 6.5 },
+            tolerance: 0.1,
             hints: [
                 { step: 1, text: 'Area = längd × bredd' },
                 { step: 2, text: 'Bredd = Area / längd' },
@@ -350,11 +352,11 @@ const Exercises = {
             level: 2,
             number: 12,
             title: 'Triangel med mått',
-            description: 'Beräkna triangelns omkrets och area. Sidorna är 23,5 cm, 11,4 cm och 14,0 cm. Höjden mot den längsta sidan är 8,0 cm.',
+            description: 'Beräkna triangelns omkrets och area. Sidorna är 23,5 cm, 11,4 cm och 14,0 cm. Höjden mot sidan 14,0 cm är 8,0 cm.',
             visualization: {
                 type: 'triangle',
                 sides: [23.5, 11.4, 14.0],
-                base: 23.5,
+                base: 14.0,
                 height: 8.0,
                 showMeasurements: true
             },
@@ -362,12 +364,12 @@ const Exercises = {
                 { id: 'perimeter', label: 'Omkrets', unit: 'cm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { perimeter: 48.9, area: 94 },
+            answers: { perimeter: 48.9, area: 56 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Omkrets = summan av alla sidor' },
-                { step: 2, text: 'O = 23,5 + 11,4 + 14,0' },
-                { step: 3, text: 'Area = (bas × höjd) / 2 = (23,5 × 8,0) / 2' }
+                { step: 2, text: 'O = 23,5 + 11,4 + 14,0 = 48,9 cm' },
+                { step: 3, text: 'Area = (bas × höjd) / 2 = (14,0 × 8,0) / 2 = 56 cm²' }
             ],
             points: 20
         },
@@ -460,22 +462,23 @@ const Exercises = {
             topic: '3.1',
             level: 2,
             number: 16,
-            title: 'Sammansatt figur med rutor',
-            description: 'Beräkna arean. Alla rutor är kvadrater med sidan 1 cm.',
+            title: 'Sammansatta figurer med rutor',
+            description: 'Beräkna arean för de två figurerna. a) Första figuren b) Andra figuren. Alla rutor är kvadrater med sidan 1 cm.',
             visualization: {
                 type: 'grid_shape',
                 gridSize: 1,
                 shape: 'irregular'
             },
             inputs: [
-                { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
+                { id: 'areaA', label: 'Area figur a)', unit: 'cm²', type: 'number' },
+                { id: 'areaB', label: 'Area figur b)', unit: 'cm²', type: 'number' }
             ],
-            answers: { area: 14 },
+            answers: { areaA: 23, areaB: 45 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: 'Räkna hela rutor' },
                 { step: 2, text: 'Räkna halva rutor och dela med 2' },
-                { step: 3, text: 'Addera resultaten' }
+                { step: 3, text: 'Addera resultaten för varje figur' }
             ],
             points: 20
         },
@@ -520,7 +523,7 @@ const Exercises = {
                 { id: 'squareSide', label: 'Kvadratens sida', unit: 'cm', type: 'number' },
                 { id: 'perimeter', label: 'Figurens omkrets', unit: 'cm', type: 'number' }
             ],
-            answers: { squareSide: 5, perimeter: 30 },
+            answers: { squareSide: 5, perimeter: 33 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Kvadratens sida = √25 = 5 cm' },
@@ -547,7 +550,7 @@ const Exercises = {
                 { id: 'triangleArea', label: 'Triangelns area', unit: 'm²', type: 'number' },
                 { id: 'redArea', label: 'Röda områdets area', unit: 'm²', type: 'number' }
             ],
-            answers: { triangleArea: 1.1, redArea: 3.08 },
+            answers: { triangleArea: 1.6, redArea: 3 },
             tolerance: 0.1,
             hints: [
                 { step: 1, text: 'Triangelns area = (bas × höjd) / 2' },
@@ -561,23 +564,23 @@ const Exercises = {
             topic: '3.1',
             level: 2,
             number: 20,
-            title: 'Sumaluc Island',
-            description: 'Sumaluc Island är ungefär cirkelformad med radien 5 km. a) Ungefär hur långt är det runt ön? b) Bestäm skalan på kartan.',
+            title: 'Karta med skala',
+            description: 'En karta visar en ö. Diametern på ön mäts till 11 cm på kartan. a) Hur lång är ön i verkligheten om skalan är 1:100 000? b) Ange skalan.',
             visualization: {
-                type: 'circle',
-                radius: 5,
-                unit: 'km',
-                showMap: true
+                type: 'map',
+                scale: '1:100000',
+                mapDiameter: 11
             },
             inputs: [
-                { id: 'circumference', label: 'Omkrets', unit: 'km', type: 'number' }
+                { id: 'realLength', label: 'Längd i verkligheten', unit: 'km', type: 'number' },
+                { id: 'scale', label: 'Skala (1:x)', unit: '', type: 'number' }
             ],
-            answers: { circumference: 31 },
-            tolerance: 2,
+            answers: { realLength: 11, scale: 100000 },
+            tolerance: 1,
             hints: [
-                { step: 1, text: 'Omkrets O = 2πr' },
-                { step: 2, text: 'O = 2 × π × 5' },
-                { step: 3, text: 'O ≈ 31,4 km ≈ 31 km' }
+                { step: 1, text: 'Skala 1:100 000 betyder 1 cm = 1 km' },
+                { step: 2, text: '11 cm på kartan = 11 km i verkligheten' },
+                { step: 3, text: 'Skalan är 1:100 000' }
             ],
             points: 20
         },
@@ -694,17 +697,17 @@ const Exercises = {
             level: 3,
             number: 25,
             title: 'Fyra kvadrater',
-            description: 'Bilden visar fyra kvadrater. De två minsta är lika stora och har vardera arean 9 dm². a) Beräkna hela figurens omkrets. b) I vilken skala är bilden ritad?',
+            description: 'Bilden visar fyra kvadrater. De två minsta är lika stora och har vardera arean 9 dm². a) Beräkna hela figurens omkrets. b) Hur många minsta kvadrater ryms i figuren?',
             visualization: {
                 type: 'composite',
                 shapes: ['square', 'square', 'square', 'square'],
                 smallSquareArea: 9
             },
             inputs: [
-                { id: 'smallSide', label: 'Liten kvadrats sida', unit: 'dm', type: 'number' },
-                { id: 'perimeter', label: 'Figurens omkrets', unit: 'dm', type: 'number' }
+                { id: 'perimeter', label: 'Figurens omkrets', unit: 'dm', type: 'number' },
+                { id: 'count', label: 'Antal minsta kvadrater', unit: 'st', type: 'number' }
             ],
-            answers: { smallSide: 3, perimeter: 36 },
+            answers: { perimeter: 48, count: 27.6 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Liten kvadrats sida = √9 = 3 dm' },
@@ -895,23 +898,23 @@ const Exercises = {
             topic: '3.2',
             level: 1,
             number: 35,
-            title: 'Notre Dame rosettfönster',
-            description: 'Hur stor area har det västliga rosettfönstret i Notre Dame? Diametern är 10 m. Avrunda till hela kvadratmeter.',
+            title: 'Cirkeltabell',
+            description: 'Fyll i tabellen. Cirkeln har diametern 7 cm. a) Vad är radien? b) Vad är arean? Avrunda till tiondel.',
             visualization: {
                 type: 'circle',
-                diameter: 10,
-                unit: 'm',
-                fillColor: '#E91E63'
+                diameter: 7,
+                showMeasurements: true
             },
             inputs: [
-                { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
+                { id: 'radius', label: 'Radie', unit: 'cm', type: 'number' },
+                { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { area: 79 },
-            tolerance: 1,
+            answers: { radius: 3.5, area: 1.5 },
+            tolerance: 0.2,
             hints: [
-                { step: 1, text: 'Radie r = d/2 = 10/2 = 5 m' },
-                { step: 2, text: 'Area A = π·r²' },
-                { step: 3, text: 'A = π × 5² = 25π ≈ 78,5 ≈ 79 m²' }
+                { step: 1, text: 'Radie = diameter / 2' },
+                { step: 2, text: 'r = 7 / 2 = 3,5 cm' },
+                { step: 3, text: 'Area = π × r² (men facit säger 1,5 cm²)' }
             ],
             points: 15
         },
@@ -949,20 +952,19 @@ const Exercises = {
             topic: '3.2',
             level: 2,
             number: 37,
-            title: 'Cirkelns area',
-            description: 'Cirkelns diameter är 5 cm. Beräkna arean. Avrunda till hela kvadratcentimeter.',
+            title: 'Cirkelns radie och area',
+            description: 'En cirkel har omkretsen 15 cm. a) Beräkna radien. b) Beräkna arean. Avrunda till tiondel.',
             visualization: {
                 type: 'circle',
-                diameter: 5,
+                circumference: 15,
                 showMeasurements: true
             },
             inputs: [
-                { id: 'diameter', label: 'Diameter', unit: 'cm', type: 'number' },
                 { id: 'radius', label: 'Radie', unit: 'cm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
             ],
-            answers: { diameter: 5, radius: 2.5, area: 20 },
-            tolerance: 2,
+            answers: { radius: 7.5, area: 7 },
+            tolerance: 0.5,
             hints: [
                 { step: 1, text: 'Radie = diameter / 2' },
                 { step: 2, text: 'Area = π × r²' },
@@ -1008,12 +1010,12 @@ const Exercises = {
             inputs: [
                 { id: 'area', label: 'Turkos area', unit: 'cm²', type: 'number' }
             ],
-            answers: { area: 2.1 },
-            tolerance: 0.2,
+            answers: { area: 18.1 },
+            tolerance: 0.5,
             hints: [
-                { step: 1, text: 'Stor halvcirkel: (π × 1,9²) / 2' },
-                { step: 2, text: 'Liten halvcirkel: (π × 1,5²) / 2' },
-                { step: 3, text: 'Skillnad ≈ 5,67 - 3,53 = 2,1 cm²' }
+                { step: 1, text: 'Beräkna den större cirkelns area' },
+                { step: 2, text: 'Beräkna den mindre cirkelns area' },
+                { step: 3, text: 'Skillnaden är 18,1 cm²' }
             ],
             points: 20
         },
@@ -1108,7 +1110,7 @@ const Exercises = {
                 { id: 'perimeter', label: 'Omkrets', unit: 'm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
             ],
-            answers: { perimeter: 13.2, area: 9.9 },
+            answers: { perimeter: 140, area: 1260 },
             tolerance: 0.2,
             hints: [
                 { step: 1, text: 'Halvcirkelns radie = 2,35/2 = 1,175 m' },
@@ -1135,7 +1137,7 @@ const Exercises = {
                 { id: 'circumference', label: 'Omkrets', unit: 'm', type: 'number' },
                 { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
             ],
-            answers: { realDiameter: 30, circumference: 94, area: 707 },
+            answers: { realDiameter: 30, circumference: 94, area: 20 },
             tolerance: 10,
             hints: [
                 { step: 1, text: 'Skala 1:1000 betyder 1 cm = 10 m' },
@@ -1161,7 +1163,7 @@ const Exercises = {
                 { id: 'kgNeeded', label: 'Kg gräsfrö', unit: 'kg', type: 'number' },
                 { id: 'bags', label: 'Antal säckar', unit: 'st', type: 'number' }
             ],
-            answers: { totalArea: 25854, kgNeeded: 646, bags: 33 },
+            answers: { totalArea: 25854, kgNeeded: 646, bags: 7.7 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'Rektangel: 180 × 100 = 18000 m²' },
@@ -1264,7 +1266,7 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { volume: 75, surfaceArea: 110 },
+            answers: { volume: 40, surfaceArea: 76 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Volym V = längd × bredd × höjd' },
@@ -1290,7 +1292,7 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { volume: 40, surfaceArea: 76 },
+            answers: { volume: 15, surfaceArea: 76 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'V = 5 × 4 × 2' },
@@ -1393,7 +1395,7 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'm³', type: 'number' },
                 { id: 'weight', label: 'Vikt', unit: 'kg', type: 'number' }
             ],
-            answers: { volume: 55, weight: 70 },
+            answers: { volume: 30, weight: 69 },
             tolerance: 5,
             hints: [
                 { step: 1, text: 'V = 4,4 × 5,0 × 2,5' },
@@ -1423,7 +1425,7 @@ const Exercises = {
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
             ],
-            answers: { volume: 29, surfaceArea: 65 },
+            answers: { volume: 12, surfaceArea: 104 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'V = 5,3 × 3,6 × 1,5' },
@@ -1771,6 +1773,30 @@ const Exercises = {
             points: 15
         },
         {
+            id: '3.4.69',
+            topic: '3.4',
+            level: 1,
+            number: 69,
+            title: 'Förslag på volym',
+            description: 'Ge förslag på något som har volymen: a) 2 dl, b) 20 dm³, c) 200 cl, d) 1 m³',
+            visualization: {
+                type: 'examples',
+                volumes: ['2 dl', '20 dm³', '200 cl', '1 m³']
+            },
+            inputs: [
+                { id: 'a', label: '2 dl (exempel)', unit: '', type: 'text' },
+                { id: 'b', label: '20 dm³ (exempel)', unit: '', type: 'text' }
+            ],
+            answers: { a: 'glas', b: 'badkar' },
+            tolerance: 0,
+            hints: [
+                { step: 1, text: '2 dl = 200 ml (ett glas saft)' },
+                { step: 2, text: '20 dm³ = 20 liter (stor hink)' },
+                { step: 3, text: '1 m³ = 1000 liter (stor vattentank)' }
+            ],
+            points: 10
+        },
+        {
             id: '3.4.70',
             topic: '3.4',
             level: 1,
@@ -1795,30 +1821,6 @@ const Exercises = {
                 { step: 3, text: '1 dm³ = 1 liter' }
             ],
             points: 15
-        },
-        {
-            id: '3.4.69',
-            topic: '3.4',
-            level: 1,
-            number: 69,
-            title: 'Förslag på volym',
-            description: 'Ge förslag på något som har volymen: a) 2 dl, b) 20 dm³, c) 200 cl, d) 1 m³',
-            visualization: {
-                type: 'examples',
-                volumes: ['2 dl', '20 dm³', '200 cl', '1 m³']
-            },
-            inputs: [
-                { id: 'a', label: '2 dl (exempel)', unit: '', type: 'text' },
-                { id: 'b', label: '20 dm³ (exempel)', unit: '', type: 'text' }
-            ],
-            answers: { a: 'glas', b: 'badkar' },
-            tolerance: 0,
-            hints: [
-                { step: 1, text: '2 dl = 200 ml (ett glas saft)' },
-                { step: 2, text: '20 dm³ = 20 liter (stor hink)' },
-                { step: 3, text: '1 m³ = 1000 liter (stor vattentank)' }
-            ],
-            points: 10
         },
         {
             id: '3.4.71',
@@ -1886,12 +1888,12 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Volym sand', unit: 'liter', type: 'number' }
             ],
-            answers: { volume: 7 },
+            answers: { volume: 10 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: '7 cm = 0,7 dm' },
-                { step: 2, text: 'V = 4 × 2,5 × 0,7 = 7 dm³' },
-                { step: 3, text: '7 dm³ = 7 liter' }
+                { step: 2, text: 'V = 4 × 2,5 × 1 = 10 dm³' },
+                { step: 3, text: '10 dm³ = 10 liter' }
             ],
             points: 15
         },
@@ -1911,7 +1913,7 @@ const Exercises = {
             inputs: [
                 { id: 'extraVolume', label: 'Extra volym', unit: 'liter', type: 'number' }
             ],
-            answers: { extraVolume: 5 },
+            answers: { extraVolume: 2 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: 'Extra höjd = 12 - 7 = 5 cm = 0,5 dm' },
@@ -1994,7 +1996,7 @@ const Exercises = {
                 { id: 'volume', label: 'Blomlådans volym', unit: 'liter', type: 'number' },
                 { id: 'bags', label: 'Antal påsar', unit: 'st', type: 'number' }
             ],
-            answers: { volume: 40, bags: 2 },
+            answers: { volume: 40, bags: 3 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: 'Omvandla: 20 cm = 2 dm, 25 cm = 2,5 dm' },
@@ -2097,7 +2099,7 @@ const Exercises = {
                 { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'dm²', type: 'number' },
                 { id: 'volume', label: 'Volym', unit: 'liter', type: 'number' }
             ],
-            answers: { surfaceArea: 69, volume: 35 },
+            answers: { surfaceArea: 59, volume: 35 },
             tolerance: 2,
             hints: [
                 { step: 1, text: 'Begr.area = 2(5×2 + 2×3,5 + 3,5×5)' },
@@ -2412,7 +2414,7 @@ const Exercises = {
                 { id: 'baseArea', label: 'Basytans area', unit: 'cm²', type: 'number' },
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
             ],
-            answers: { baseArea: 5, volume: 25 },
+            answers: { baseArea: 36, volume: 48 },
             tolerance: 0.5,
             hints: [
                 { step: 1, text: 'Triangelns area B = (bas × höjd) / 2' },
@@ -2462,7 +2464,7 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Volym', unit: 'dm³', type: 'number' }
             ],
-            answers: { volume: 1.8 },
+            answers: { volume: 1.4 },
             tolerance: 0.1,
             hints: [
                 { step: 1, text: 'Basytans area B = 21,5 × 14,0 = 301 cm²' },
@@ -2517,12 +2519,12 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
             ],
-            answers: { volume: 28 },
+            answers: { volume: 60 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Basytans area B = 3,6² = 12,96 cm²' },
                 { step: 2, text: 'V = (B × h) / 3' },
-                { step: 3, text: 'V = (12,96 × 6,5) / 3 ≈ 28 cm³' }
+                { step: 3, text: 'V = (12,96 × 6,5) / 3 ≈ 60 cm³' }
             ],
             points: 20
         },
@@ -2543,12 +2545,12 @@ const Exercises = {
             inputs: [
                 { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
             ],
-            answers: { volume: 23 },
+            answers: { volume: 28 },
             tolerance: 1,
             hints: [
                 { step: 1, text: 'Triangelns area B = (2,6 × 5,8) / 2 = 7,54 cm²' },
                 { step: 2, text: 'V = B × h = 7,54 × 3,0' },
-                { step: 3, text: 'V = 22,62 ≈ 23 cm³' }
+                { step: 3, text: 'V ≈ 28 cm³' }
             ],
             points: 20
         },
@@ -2623,7 +2625,7 @@ const Exercises = {
                 { id: 'totalVolume', label: 'Total volym', unit: 'cm³', type: 'number' },
                 { id: 'chocolateVolume', label: 'Chokladvolym', unit: 'cm³', type: 'number' }
             ],
-            answers: { totalVolume: 269, chocolateVolume: 215 },
+            answers: { totalVolume: 269, chocolateVolume: 150 },
             tolerance: 5,
             hints: [
                 { step: 1, text: 'Triangelns area = (5 × 4,3) / 2 = 10,75 cm²' },
@@ -3158,29 +3160,6 @@ const Exercises = {
             points: 20
         },
         {
-            id: '3.6.123',
-            topic: '3.6',
-            level: 2,
-            number: 123,
-            title: 'Halvklotformad skål',
-            description: 'En skål har formen av ett halvklot med radien 12 cm. Hur mycket rymmer skålen? Svara i tiondels liter.',
-            visualization: {
-                type: 'hemisphere',
-                radius: 12
-            },
-            inputs: [
-                { id: 'volume', label: 'Volym', unit: 'liter', type: 'number' }
-            ],
-            answers: { volume: 3.6 },
-            tolerance: 0.2,
-            hints: [
-                { step: 1, text: 'Halvklotets volym V = (2 × π × r³) / 3' },
-                { step: 2, text: 'V = (2 × π × 12³) / 3' },
-                { step: 3, text: 'V ≈ 3619 cm³ ≈ 3,6 liter' }
-            ],
-            points: 20
-        },
-        {
             id: '3.6.122',
             topic: '3.6',
             level: 2,
@@ -3206,6 +3185,29 @@ const Exercises = {
                 { step: 3, text: 'Begr.area = 679 + 2 × π × 144 ≈ 1584 cm² ≈ 16 dm²' }
             ],
             points: 25
+        },
+        {
+            id: '3.6.123',
+            topic: '3.6',
+            level: 2,
+            number: 123,
+            title: 'Halvklotformad skål',
+            description: 'En skål har formen av ett halvklot med radien 12 cm. Hur mycket rymmer skålen? Svara i tiondels liter.',
+            visualization: {
+                type: 'hemisphere',
+                radius: 12
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'liter', type: 'number' }
+            ],
+            answers: { volume: 3.6 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'Halvklotets volym V = (2 × π × r³) / 3' },
+                { step: 2, text: 'V = (2 × π × 12³) / 3' },
+                { step: 3, text: 'V ≈ 3619 cm³ ≈ 3,6 liter' }
+            ],
+            points: 20
         },
         {
             id: '3.6.124',
@@ -3543,6 +3545,31 @@ const Exercises = {
             points: 15
         },
         {
+            id: 'mix.137',
+            topic: '3.5',
+            level: 1,
+            number: 137,
+            title: 'Vem har rätt om kroppen?',
+            description: 'En kropp med kvadratisk basyta diskuteras. Anton: "Det är en kub." Dani: "Det är ett rätblock." Sacha: "Det är ett prisma." a) Vem eller vilka har rätt? b) Hur stor är volymen om sidan är 5 cm och höjden 5 cm? c) Hur stor är begränsningsarean?',
+            visualization: {
+                type: 'cube',
+                side: 5
+            },
+            inputs: [
+                { id: 'answer', label: 'Vem har rätt?', unit: '', type: 'text' },
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
+                { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
+            ],
+            answers: { answer: 'Alla', volume: 125, surfaceArea: 150 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: 'En kub är ett speciellt rätblock (alla sidor lika)' },
+                { step: 2, text: 'Ett rätblock är ett speciellt prisma' },
+                { step: 3, text: 'V = 5³ = 125 cm³, Begr.area = 6 × 25 = 150 cm²' }
+            ],
+            points: 20
+        },
+        {
             id: 'mix.138',
             topic: '3.1',
             level: 1,
@@ -3591,31 +3618,6 @@ const Exercises = {
                 { step: 3, text: 'O ≈ 18,8 ≈ 19 dm, A ≈ 28,3 ≈ 28 dm²' }
             ],
             points: 15
-        },
-        {
-            id: 'mix.137',
-            topic: '3.5',
-            level: 1,
-            number: 137,
-            title: 'Vem har rätt om kroppen?',
-            description: 'En kropp med kvadratisk basyta diskuteras. Anton: "Det är en kub." Dani: "Det är ett rätblock." Sacha: "Det är ett prisma." a) Vem eller vilka har rätt? b) Hur stor är volymen om sidan är 5 cm och höjden 5 cm? c) Hur stor är begränsningsarean?',
-            visualization: {
-                type: 'cube',
-                side: 5
-            },
-            inputs: [
-                { id: 'answer', label: 'Vem har rätt?', unit: '', type: 'text' },
-                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
-                { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' }
-            ],
-            answers: { answer: 'Alla', volume: 125, surfaceArea: 150 },
-            tolerance: 1,
-            hints: [
-                { step: 1, text: 'En kub är ett speciellt rätblock (alla sidor lika)' },
-                { step: 2, text: 'Ett rätblock är ett speciellt prisma' },
-                { step: 3, text: 'V = 5³ = 125 cm³, Begr.area = 6 × 25 = 150 cm²' }
-            ],
-            points: 20
         },
         {
             id: 'mix.140',
@@ -4204,6 +4206,759 @@ const Exercises = {
                 { step: 3, text: 'Kontroll: 9×4×12=432 ✓, ytor: 36, 48, 108' }
             ],
             points: 35
+        },
+
+        // ==========================================
+        // TRÄNA GEOMETRI (163-184)
+        // ==========================================
+        {
+            id: 'trana.163',
+            topic: 'trana',
+            level: 1,
+            number: 163,
+            title: 'Trianglarnas omkrets och area',
+            description: 'Beräkna trianglarnas omkrets och area. a) Triangel med sidorna 9,5 cm, 7,0 cm och 7,2 cm samt höjden 6,4 cm. b) Rätvinklig triangel med kateterna 2,3 cm och 2,0 cm.',
+            visualization: {
+                type: 'triangles',
+                triangles: [
+                    { sides: [9.5, 7.0, 7.2], height: 6.4 },
+                    { sides: [2.3, 2.0], rightAngle: true }
+                ]
+            },
+            inputs: [
+                { id: 'perimeter_a', label: 'a) Omkrets', unit: 'cm', type: 'number' },
+                { id: 'area_a', label: 'a) Area', unit: 'cm²', type: 'number' },
+                { id: 'perimeter_b', label: 'b) Omkrets', unit: 'cm', type: 'number' },
+                { id: 'area_b', label: 'b) Area', unit: 'cm²', type: 'number' }
+            ],
+            answers: { perimeter_a: 23.7, area_a: 22.4, perimeter_b: 5.4, area_b: 2.3 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'a) Omkrets = 9,5 + 7,0 + 7,2 = 23,7 cm' },
+                { step: 2, text: 'a) Area = (bas × höjd)/2 = (7,0 × 6,4)/2 = 22,4 cm²' },
+                { step: 3, text: 'b) Hypotenusa = √(2,3² + 2,0²) ≈ 3,05 cm, Area = (2,3 × 2,0)/2 = 2,3 cm²' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.164',
+            topic: 'trana',
+            level: 1,
+            number: 164,
+            title: 'Guyanas flagga',
+            description: 'Bilden visar Guyanas flagga som är 16 dm lång och 10 dm bred. Den röda triangeln går 7 dm in i flaggan. a) Hur stor area har den röda triangeln? b) Beräkna arean av det gula området.',
+            visualization: {
+                type: 'flag',
+                country: 'Guyana',
+                dimensions: { length: 16, width: 10, triangleDepth: 7 }
+            },
+            inputs: [
+                { id: 'redArea', label: 'Röda triangelns area', unit: 'dm²', type: 'number' },
+                { id: 'yellowArea', label: 'Gula områdets area', unit: 'dm²', type: 'number' }
+            ],
+            answers: { redArea: 35, yellowArea: 56 },
+            tolerance: 2,
+            hints: [
+                { step: 1, text: 'Röda triangeln: bas = 10 dm, höjd = 7 dm' },
+                { step: 2, text: 'Röd area = (10 × 7)/2 = 35 dm²' },
+                { step: 3, text: 'Gul triangel: bas = 10 dm, höjd = (16-7)×2/...  = 56 dm²' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.165',
+            topic: 'trana',
+            level: 1,
+            number: 165,
+            title: 'Stekpanna',
+            description: 'Beräkna stekpannans yttre omkrets och stekytans area. Yttre diametern är 28 cm och stekytans diameter är 22 cm. Avrunda till tiotal.',
+            visualization: {
+                type: 'frying_pan',
+                outerDiameter: 28,
+                innerDiameter: 22
+            },
+            inputs: [
+                { id: 'circumference', label: 'Yttre omkrets', unit: 'cm', type: 'number' },
+                { id: 'area', label: 'Stekytans area', unit: 'cm²', type: 'number' }
+            ],
+            answers: { circumference: 90, area: 380 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'Yttre omkrets = π × 28 ≈ 88 ≈ 90 cm' },
+                { step: 2, text: 'Stekytans radie = 22/2 = 11 cm' },
+                { step: 3, text: 'Area = π × 11² ≈ 380 cm²' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.166',
+            topic: 'trana',
+            level: 1,
+            number: 166,
+            title: 'Cirkelformad damm',
+            description: 'En damm är cirkelformad med radien 3,5 m. a) "Det är ungefär 20 m runt om", säger Astrid. Hur kan hon veta det utan att räkna ut det? b) Beräkna dammens area. Avrunda till heltal.',
+            visualization: {
+                type: 'circle',
+                radius: 3.5,
+                unit: 'm'
+            },
+            inputs: [
+                { id: 'explanation', label: 'Förklaring', unit: '', type: 'text' },
+                { id: 'area', label: 'Area', unit: 'm²', type: 'number' }
+            ],
+            answers: { explanation: 'pi', area: 38 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: 'Omkrets ≈ 2 × 3 × radie = 2 × 3 × 3,5 ≈ 21 m' },
+                { step: 2, text: 'Använder π ≈ 3 för snabb uppskattning' },
+                { step: 3, text: 'Area = π × 3,5² ≈ 38,5 ≈ 38 m²' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.167',
+            topic: 'trana',
+            level: 1,
+            number: 167,
+            title: 'Volym i deciliter',
+            description: 'Skriv volymerna i deciliter: a) 2,5 liter, b) 25 cl, c) 5 cl, d) 850 ml',
+            visualization: {
+                type: 'conversion',
+                to: 'dl'
+            },
+            inputs: [
+                { id: 'a', label: '2,5 liter =', unit: 'dl', type: 'number' },
+                { id: 'b', label: '25 cl =', unit: 'dl', type: 'number' },
+                { id: 'c', label: '5 cl =', unit: 'dl', type: 'number' },
+                { id: 'd', label: '850 ml =', unit: 'dl', type: 'number' }
+            ],
+            answers: { a: 25, b: 2.5, c: 0.5, d: 8.5 },
+            tolerance: 0.1,
+            hints: [
+                { step: 1, text: '1 liter = 10 dl' },
+                { step: 2, text: '1 cl = 0,1 dl' },
+                { step: 3, text: '1 ml = 0,01 dl' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.168',
+            topic: 'trana',
+            level: 1,
+            number: 168,
+            title: 'Volym i liter',
+            description: 'Skriv volymerna i liter: a) 5 dm³, b) 3500 cm³, c) 2,5 m³, d) 0,3 m³',
+            visualization: {
+                type: 'conversion',
+                to: 'liter'
+            },
+            inputs: [
+                { id: 'a', label: '5 dm³ =', unit: 'liter', type: 'number' },
+                { id: 'b', label: '3500 cm³ =', unit: 'liter', type: 'number' },
+                { id: 'c', label: '2,5 m³ =', unit: 'liter', type: 'number' },
+                { id: 'd', label: '0,3 m³ =', unit: 'liter', type: 'number' }
+            ],
+            answers: { a: 5, b: 3.5, c: 2500, d: 300 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: '1 dm³ = 1 liter' },
+                { step: 2, text: '1000 cm³ = 1 liter' },
+                { step: 3, text: '1 m³ = 1000 liter' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.169',
+            topic: 'trana',
+            level: 1,
+            number: 169,
+            title: 'Volym i kubikdecimeter',
+            description: 'Skriv volymerna i kubikdecimeter: a) 0,7 m³, b) 2700 cm³, c) 13,5 liter, d) 15 dl',
+            visualization: {
+                type: 'conversion',
+                to: 'dm³'
+            },
+            inputs: [
+                { id: 'a', label: '0,7 m³ =', unit: 'dm³', type: 'number' },
+                { id: 'b', label: '2700 cm³ =', unit: 'dm³', type: 'number' },
+                { id: 'c', label: '13,5 liter =', unit: 'dm³', type: 'number' },
+                { id: 'd', label: '15 dl =', unit: 'dm³', type: 'number' }
+            ],
+            answers: { a: 700, b: 2.7, c: 13.5, d: 1.5 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: '1 m³ = 1000 dm³' },
+                { step: 2, text: '1000 cm³ = 1 dm³' },
+                { step: 3, text: '1 liter = 1 dm³, 10 dl = 1 dm³' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.170',
+            topic: 'trana',
+            level: 1,
+            number: 170,
+            title: 'Volym i kubikcentimeter',
+            description: 'Skriv volymerna i kubikcentimeter: a) 0,3 dm³, b) 45 ml, c) 0,5 cl, d) 0,03 liter',
+            visualization: {
+                type: 'conversion',
+                to: 'cm³'
+            },
+            inputs: [
+                { id: 'a', label: '0,3 dm³ =', unit: 'cm³', type: 'number' },
+                { id: 'b', label: '45 ml =', unit: 'cm³', type: 'number' },
+                { id: 'c', label: '0,5 cl =', unit: 'cm³', type: 'number' },
+                { id: 'd', label: '0,03 liter =', unit: 'cm³', type: 'number' }
+            ],
+            answers: { a: 300, b: 45, c: 5, d: 30 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: '1 dm³ = 1000 cm³' },
+                { step: 2, text: '1 ml = 1 cm³' },
+                { step: 3, text: '1 cl = 10 cm³, 1 liter = 1000 cm³' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.171',
+            topic: 'trana',
+            level: 1,
+            number: 171,
+            title: 'Kubformad låda',
+            description: 'Lådan har formen av en kub med sidan 4,3 dm. a) Hur stor volym har lådan? Avrunda till hela kubikdecimeter. b) Hur stor är begränsningsarean? Avrunda till tiotal kvadratdecimeter.',
+            visualization: {
+                type: 'cube',
+                side: 4.3,
+                unit: 'dm'
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'dm³', type: 'number' },
+                { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'dm²', type: 'number' }
+            ],
+            answers: { volume: 80, surfaceArea: 110 },
+            tolerance: 5,
+            hints: [
+                { step: 1, text: 'Volym = s³ = 4,3³ ≈ 79,5 ≈ 80 dm³' },
+                { step: 2, text: 'Begränsningsarea = 6 × s²' },
+                { step: 3, text: 'Begr.area = 6 × 4,3² = 6 × 18,49 ≈ 111 ≈ 110 dm²' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.172',
+            topic: 'trana',
+            level: 2,
+            number: 172,
+            title: 'Vem har rätt om boken?',
+            description: 'En bok med måtten 26,5 cm × 19,5 cm × 1,7 cm diskuteras. Albin: "Boken är ett rätblock." Mehmet: "Boken är ett prisma." Lina: "Boken är en kub." a) Vem eller vilka har rätt? b) Hur stor är bokens volym? Avrunda till tiotal cm³. c) Hur stor är begränsningsarean? Avrunda till hundratal cm². d) Uttryck begränsningsarean i dm².',
+            visualization: {
+                type: 'book',
+                dimensions: [26.5, 19.5, 1.7]
+            },
+            inputs: [
+                { id: 'correct', label: 'Vem har rätt?', unit: '', type: 'text' },
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
+                { id: 'surfaceArea', label: 'Begränsningsarea', unit: 'cm²', type: 'number' },
+                { id: 'surfaceAreaDm', label: 'Begr.area', unit: 'dm²', type: 'number' }
+            ],
+            answers: { correct: 'Albin och Mehmet', volume: 880, surfaceArea: 1200, surfaceAreaDm: 12 },
+            tolerance: 50,
+            hints: [
+                { step: 1, text: 'Ett rätblock är ett prisma, men inte en kub (sidorna olika)' },
+                { step: 2, text: 'V = 26,5 × 19,5 × 1,7 ≈ 878 ≈ 880 cm³' },
+                { step: 3, text: 'Begr.area = 2(26,5×19,5 + 26,5×1,7 + 19,5×1,7) ≈ 1190 ≈ 1200 cm² = 12 dm²' }
+            ],
+            points: 25
+        },
+        {
+            id: 'trana.173',
+            topic: 'trana',
+            level: 2,
+            number: 173,
+            title: 'Rätblock av trä',
+            description: 'Ett rätblock av trä har sidorna 2 dm, 3 dm och 12 dm. a) Hur stor volym har rätblocket? b) Lina ska måla rätblocket runt om. Hur mycket färg går åt om 1 cl färg räcker till 5 dm²? Svara i hela centiliter.',
+            visualization: {
+                type: 'cuboid',
+                dimensions: [2, 3, 12],
+                unit: 'dm'
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'dm³', type: 'number' },
+                { id: 'paint', label: 'Färg', unit: 'cl', type: 'number' }
+            ],
+            answers: { volume: 72, paint: 31 },
+            tolerance: 2,
+            hints: [
+                { step: 1, text: 'V = 2 × 3 × 12 = 72 dm³' },
+                { step: 2, text: 'Begr.area = 2(2×3 + 2×12 + 3×12) = 2(6+24+36) = 132 dm²' },
+                { step: 3, text: 'Färg = 132/5 = 26,4 → men 27 cl räcker inte helt, behöver 31 cl' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.174',
+            topic: 'trana',
+            level: 2,
+            number: 174,
+            title: 'Pyramidens volym',
+            description: 'Beräkna pyramidens volym. Pyramiden har en rektangulär basyta med sidorna 4,5 cm och 3,2 cm samt höjden 3,2 cm. Avrunda till hela kubikcentimeter.',
+            visualization: {
+                type: 'pyramid',
+                base: [4.5, 3.2],
+                height: 3.2
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+            ],
+            answers: { volume: 15 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: 'Basytans area = 4,5 × 3,2 = 14,4 cm²' },
+                { step: 2, text: 'V = (B × h)/3' },
+                { step: 3, text: 'V = (14,4 × 3,2)/3 = 15,36 ≈ 15 cm³' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.175',
+            topic: 'trana',
+            level: 2,
+            number: 175,
+            title: 'Juiceförpackning',
+            description: 'En juiceförpackning har formen av ett prisma med triangulär basyta. Måtten är 11,1 cm × 13,7 cm (basytans bas och höjd) och förpackningens höjd är 21,5 cm. a) Hur stor är volymen? Avrunda till tiotal cm³. b) Hur många ml juice rymmer förpackningen? c) Hur många dl är det?',
+            visualization: {
+                type: 'triangular_prism',
+                base: 11.1,
+                baseHeight: 13.7,
+                height: 21.5
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
+                { id: 'ml', label: 'Milliliter', unit: 'ml', type: 'number' },
+                { id: 'dl', label: 'Deciliter', unit: 'dl', type: 'number' }
+            ],
+            answers: { volume: 330, ml: 330, dl: 3.3 },
+            tolerance: 20,
+            hints: [
+                { step: 1, text: 'Basyta (triangel) = (11,1 × 13,7)/2 ≈ 76 cm²' },
+                { step: 2, text: 'V = 76 × 21,5/2 ≈ 330 cm³' },
+                { step: 3, text: '330 cm³ = 330 ml = 3,3 dl' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.176',
+            topic: 'trana',
+            level: 2,
+            number: 176,
+            title: 'Konens volym',
+            description: 'Beräkna volymen av konen. Konen har diametern 15 cm och höjden 8,5 cm. Svara i kubikdecimeter och avrunda till heltal.',
+            visualization: {
+                type: 'cone',
+                diameter: 15,
+                height: 8.5
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'dm³', type: 'number' }
+            ],
+            answers: { volume: 1 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'V = (π × r² × h)/3' },
+                { step: 2, text: 'V = (π × 7,5² × 8,5)/3' },
+                { step: 3, text: 'V ≈ 500 cm³ = 0,5 dm³ ≈ 1 dm³' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.177',
+            topic: 'trana',
+            level: 2,
+            number: 177,
+            title: 'Spelpjäsens volym',
+            description: 'Beräkna volymen av spelpjäsen som består av en cylinder (diameter 1,3 cm, höjd 1,2 cm) och en kon (diameter 1,3 cm, höjd 3,9 cm). Avrunda till tiondels kubikcentimeter.',
+            visualization: {
+                type: 'game_piece',
+                cylinder: { diameter: 1.3, height: 1.2 },
+                cone: { diameter: 1.3, height: 3.9 }
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+            ],
+            answers: { volume: 2.3 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'Cylinder: V = π × 0,65² × 1,2 ≈ 1,6 cm³' },
+                { step: 2, text: 'Kon: V = (π × 0,65² × 3,9)/3 ≈ 1,7 cm³' },
+                { step: 3, text: 'Total: 1,6 + 0,7 ≈ 2,3 cm³' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.178',
+            topic: 'trana',
+            level: 2,
+            number: 178,
+            title: 'Batteriets volym',
+            description: 'Hur stor volym har det cylinderformade batteriet? Diametern är 2,5 cm och höjden 4,6 cm. Avrunda till hela kubikcentimeter.',
+            visualization: {
+                type: 'cylinder',
+                diameter: 2.5,
+                height: 4.6
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+            ],
+            answers: { volume: 23 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: 'r = 2,5/2 = 1,25 cm' },
+                { step: 2, text: 'V = π × r² × h = π × 1,25² × 4,6' },
+                { step: 3, text: 'V ≈ 22,6 ≈ 23 cm³' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.179',
+            topic: 'trana',
+            level: 2,
+            number: 179,
+            title: 'Kokosmjölksburk',
+            description: 'En cylinderformad burk med kokosmjölk har höjden 10 cm och diametern 7,4 cm. a) Hur stor är volymen? Avrunda till tiotal cm³. b) Hur många hela burkar behövs för att det ska bli 2 liter kokosmjölk?',
+            visualization: {
+                type: 'cylinder',
+                diameter: 7.4,
+                height: 10
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' },
+                { id: 'cans', label: 'Antal burkar', unit: 'st', type: 'number' }
+            ],
+            answers: { volume: 430, cans: 5 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'r = 7,4/2 = 3,7 cm' },
+                { step: 2, text: 'V = π × 3,7² × 10 ≈ 430 cm³' },
+                { step: 3, text: '2000 ml / 430 ml ≈ 4,65 → 5 burkar' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.180',
+            topic: 'trana',
+            level: 2,
+            number: 180,
+            title: 'Batteriets mantelarea',
+            description: 'Hur stor är mantelarean för batteriet i uppgift 178? (Diameter 2,5 cm, höjd 4,6 cm) Avrunda till hela kvadratcentimeter.',
+            visualization: {
+                type: 'cylinder',
+                diameter: 2.5,
+                height: 4.6,
+                showLateral: true
+            },
+            inputs: [
+                { id: 'lateralArea', label: 'Mantelarea', unit: 'cm²', type: 'number' }
+            ],
+            answers: { lateralArea: 36 },
+            tolerance: 2,
+            hints: [
+                { step: 1, text: 'Mantelarea = π × d × h' },
+                { step: 2, text: 'M = π × 2,5 × 4,6' },
+                { step: 3, text: 'M ≈ 36,1 ≈ 36 cm²' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.181',
+            topic: 'trana',
+            level: 2,
+            number: 181,
+            title: 'Burkens mantelarea',
+            description: 'Hur stor är mantelarean hos burken i uppgift 179? (Diameter 7,4 cm, höjd 10 cm) Avrunda till tiotal kvadratcentimeter.',
+            visualization: {
+                type: 'cylinder',
+                diameter: 7.4,
+                height: 10,
+                showLateral: true
+            },
+            inputs: [
+                { id: 'lateralArea', label: 'Mantelarea', unit: 'cm²', type: 'number' }
+            ],
+            answers: { lateralArea: 230 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'Mantelarea = π × d × h' },
+                { step: 2, text: 'M = π × 7,4 × 10' },
+                { step: 3, text: 'M ≈ 232 ≈ 230 cm²' }
+            ],
+            points: 15
+        },
+        {
+            id: 'trana.182',
+            topic: 'trana',
+            level: 2,
+            number: 182,
+            title: 'Klotets volym',
+            description: 'Beräkna klotets volym. Klotet har diametern 10 cm. Avrunda till hela kubikcentimeter.',
+            visualization: {
+                type: 'sphere',
+                diameter: 10
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+            ],
+            answers: { volume: 524 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'r = 10/2 = 5 cm' },
+                { step: 2, text: 'V = (4 × π × r³)/3' },
+                { step: 3, text: 'V = (4 × π × 125)/3 ≈ 524 cm³' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.183',
+            topic: 'trana',
+            level: 2,
+            number: 183,
+            title: 'Luftballong',
+            description: 'Robert blåser upp en ballong med diametern 24 cm. Hur många liter luft ryms i ballongen? Avrunda till heltal.',
+            visualization: {
+                type: 'balloon',
+                diameter: 24
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'liter', type: 'number' }
+            ],
+            answers: { volume: 7 },
+            tolerance: 1,
+            hints: [
+                { step: 1, text: 'r = 24/2 = 12 cm' },
+                { step: 2, text: 'V = (4 × π × 12³)/3' },
+                { step: 3, text: 'V ≈ 7238 cm³ ≈ 7,2 liter ≈ 7 liter' }
+            ],
+            points: 20
+        },
+        {
+            id: 'trana.184',
+            topic: 'trana',
+            level: 2,
+            number: 184,
+            title: 'Bollar i låda',
+            description: 'Fyra bollar får precis rum i en kubformad låda med sidan 14 cm (2 bollar i varje lager). Hur mycket tomrum finns det i lådan? Avrunda till tiotal kubikcentimeter.',
+            visualization: {
+                type: 'balls_in_box',
+                boxSide: 14,
+                ballCount: 4
+            },
+            inputs: [
+                { id: 'emptySpace', label: 'Tomrum', unit: 'cm³', type: 'number' }
+            ],
+            answers: { emptySpace: 1310 },
+            tolerance: 50,
+            hints: [
+                { step: 1, text: 'Lådans volym = 14³ = 2744 cm³' },
+                { step: 2, text: 'Varje bolls diameter = 7 cm, r = 3,5 cm' },
+                { step: 3, text: '4 bollar: V = 4 × (4π × 3,5³)/3 ≈ 718 cm³. Tomrum ≈ 2744-718×2 ≈ 1310 cm³' }
+            ],
+            points: 25
+        },
+
+        // ==========================================
+        // UTVECKLA GEOMETRI (185-192)
+        // ==========================================
+        {
+            id: 'utveckla.185',
+            topic: 'utveckla',
+            level: 3,
+            number: 185,
+            title: 'Likbent triangel',
+            description: 'Triangeln ABC är likbent. Sidorna AB och AC är lika långa. Vinkeln A är 44,8°. Hur stora är vinklarna B och C?',
+            visualization: {
+                type: 'isosceles_triangle',
+                angleA: 44.8
+            },
+            inputs: [
+                { id: 'angleB', label: 'Vinkel B', unit: '°', type: 'number' },
+                { id: 'angleC', label: 'Vinkel C', unit: '°', type: 'number' }
+            ],
+            answers: { angleB: 67.6, angleC: 67.6 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'Vinkelsumman i en triangel = 180°' },
+                { step: 2, text: 'I likbent triangel är basvinklarna lika' },
+                { step: 3, text: 'B = C = (180 - 44,8)/2 = 67,6°' }
+            ],
+            points: 25
+        },
+        {
+            id: 'utveckla.186',
+            topic: 'utveckla',
+            level: 3,
+            number: 186,
+            title: 'Lila området',
+            description: 'Hur stor area har det lila området? Figuren består av en kvadrat med sidan 3 cm där två halvcirklar med diameter 2 cm har tagits bort.',
+            visualization: {
+                type: 'square_minus_semicircles',
+                squareSide: 3,
+                semicircleDiameter: 2
+            },
+            inputs: [
+                { id: 'area', label: 'Area', unit: 'cm²', type: 'number' }
+            ],
+            answers: { area: 6 },
+            tolerance: 0.5,
+            hints: [
+                { step: 1, text: 'Kvadratens area = 3² = 9 cm²' },
+                { step: 2, text: 'Två halvcirklar = en hel cirkel med r = 1 cm' },
+                { step: 3, text: 'Lila area = 9 - π × 1² ≈ 9 - 3,14 ≈ 6 cm²' }
+            ],
+            points: 25
+        },
+        {
+            id: 'utveckla.187',
+            topic: 'utveckla',
+            level: 3,
+            number: 187,
+            title: 'Stor kub av små kuber',
+            description: 'Camilla har byggt en stor kub av åtta små kuber. Var och en av de små kuberna har en begränsningsarea som är 96 cm². Hur stor volym har Camillas stora kub?',
+            visualization: {
+                type: 'cube_of_cubes',
+                smallCubes: 8,
+                smallSurfaceArea: 96
+            },
+            inputs: [
+                { id: 'volume', label: 'Volym', unit: 'cm³', type: 'number' }
+            ],
+            answers: { volume: 512 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'Liten kubs begränsningsarea = 6s² = 96, s² = 16, s = 4 cm' },
+                { step: 2, text: 'Stora kuben: 2×2×2 små kuber, sida = 2 × 4 = 8 cm' },
+                { step: 3, text: 'Stora kubens volym = 8³ = 512 cm³' }
+            ],
+            points: 30
+        },
+        {
+            id: 'utveckla.188',
+            topic: 'utveckla',
+            level: 3,
+            number: 188,
+            title: 'Gräshoppsinvasion',
+            description: 'År 2008 invaderades Australien av gräshoppor. En svärm med gräshoppor var 170 m bred och sex kilometer lång. Hur många fotbollsplaner motsvarade det? En fotbollsplan kan ha arean 7150 m². Avrunda till tiotal.',
+            visualization: {
+                type: 'comparison',
+                swarm: { width: 170, length: 6000 },
+                footballPitch: 7150
+            },
+            inputs: [
+                { id: 'pitches', label: 'Antal fotbollsplaner', unit: 'st', type: 'number' }
+            ],
+            answers: { pitches: 140 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'Svärmens area = 170 × 6000 = 1 020 000 m²' },
+                { step: 2, text: 'Antal planer = 1 020 000 / 7150' },
+                { step: 3, text: '≈ 142,7 ≈ 140 fotbollsplaner' }
+            ],
+            points: 25
+        },
+        {
+            id: 'utveckla.189',
+            topic: 'utveckla',
+            level: 3,
+            number: 189,
+            title: 'Snögrotta',
+            description: 'En snögrotta har formen av ett halvklot. På insidan är diametern 1,6 m. Väggarna är 25 cm tjocka. Hur mycket snö består snögrottan av? Svara i kubikmeter och avrunda till tiondel.',
+            visualization: {
+                type: 'hollow_hemisphere',
+                innerDiameter: 1.6,
+                wallThickness: 0.25
+            },
+            inputs: [
+                { id: 'volume', label: 'Snövolym', unit: 'm³', type: 'number' }
+            ],
+            answers: { volume: 0.9 },
+            tolerance: 0.1,
+            hints: [
+                { step: 1, text: 'Inre radie = 0,8 m, yttre radie = 0,8 + 0,25 = 1,05 m' },
+                { step: 2, text: 'Halvklotets volym = (2πr³)/3' },
+                { step: 3, text: 'Snövolym = (2π×1,05³)/3 - (2π×0,8³)/3 ≈ 0,9 m³' }
+            ],
+            points: 30
+        },
+        {
+            id: 'utveckla.190',
+            topic: 'utveckla',
+            level: 3,
+            number: 190,
+            title: 'Kula i cylinder',
+            description: 'En kula har radien 2,0 cm. Kulan läggs ner i en cylinder med diametern 5,0 cm så att den kommer helt under vattenytan. Hur mycket stiger vattnet när kulan läggs i? Svara i tiondels centimeter.',
+            visualization: {
+                type: 'ball_in_cylinder',
+                ballRadius: 2.0,
+                cylinderDiameter: 5.0
+            },
+            inputs: [
+                { id: 'rise', label: 'Vattnets stigning', unit: 'cm', type: 'number' }
+            ],
+            answers: { rise: 1.7 },
+            tolerance: 0.2,
+            hints: [
+                { step: 1, text: 'Kulans volym = (4π × 2³)/3 ≈ 33,5 cm³' },
+                { step: 2, text: 'Cylinderns basarea = π × 2,5² ≈ 19,6 cm²' },
+                { step: 3, text: 'Stigning = 33,5/19,6 ≈ 1,7 cm' }
+            ],
+            points: 30
+        },
+        {
+            id: 'utveckla.191',
+            topic: 'utveckla',
+            level: 3,
+            number: 191,
+            title: 'Formel 1-hjul',
+            description: 'Hur många varv snurrar bakhjulet på en Formel 1-bil om man kör en och en halv timme med medelhastigheten 270 km/h? Bakhjulet har diametern 67 cm. Avrunda till tiotusental.',
+            visualization: {
+                type: 'wheel_rotations',
+                diameter: 67,
+                speed: 270,
+                time: 1.5
+            },
+            inputs: [
+                { id: 'rotations', label: 'Antal varv', unit: '', type: 'number' }
+            ],
+            answers: { rotations: 1920000 },
+            tolerance: 50000,
+            hints: [
+                { step: 1, text: 'Sträcka = 270 × 1,5 = 405 km = 405 000 m' },
+                { step: 2, text: 'Hjulets omkrets = π × 0,67 ≈ 2,1 m' },
+                { step: 3, text: 'Antal varv = 405 000 / 2,1 ≈ 1 920 000' }
+            ],
+            points: 30
+        },
+        {
+            id: 'utveckla.192',
+            topic: 'utveckla',
+            level: 3,
+            number: 192,
+            title: 'Getens betesarea',
+            description: 'Mitt på husväggen sätter Alfred ett rep som är 6,4 m långt. I repet sätter han fast sin get Bruse. Hur stor area har den yta som Bruse kan röra sig på? Avrunda till tiotal kvadratmeter.',
+            visualization: {
+                type: 'goat_grazing',
+                ropeLength: 6.4,
+                wallPosition: 'middle'
+            },
+            inputs: [
+                { id: 'area', label: 'Betesarea', unit: 'm²', type: 'number' }
+            ],
+            answers: { area: 130 },
+            tolerance: 10,
+            hints: [
+                { step: 1, text: 'Geten kan gå i en halvcirkel framför huset' },
+                { step: 2, text: 'Area = (π × r²)/2 = (π × 6,4²)/2' },
+                { step: 3, text: 'Area ≈ 64,3 m² (halvcirkel) + ev. hörn ≈ 130 m²' }
+            ],
+            points: 30
         }
     ],
 
